@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 
 /**
  * @author Nick
- *thingy
+ *
  */
 public class GameGui extends Application
 {
