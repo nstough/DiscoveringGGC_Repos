@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-
+// John was here
 /**Class: GameGui
  * @author Nick Stough
  * @version 1.0
