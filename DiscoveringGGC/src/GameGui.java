@@ -30,16 +30,24 @@ import javafx.stage.Stage;
  */
 public class GameGui extends Application
 {
+	public Game myGame = new Game();
+	
 	//Just change as you go
 	public String version = "0.5";
 	
 	//The text that is displayed on the buttons
-	public String b1Text = "Investigate";
-	public String b2Text = "Talk to";
-	public String b3Text = "Walk forward";
-	public String b4Text = "Pick Up";
+	public String b1Text = myGame.getB1Results();
+	public String b2Text = myGame.getB2Results();
+	public String b3Text = myGame.getB3Results();
+	public String b4Text = myGame.getB4Results();
+	
 	public String b5Text = "Inventory";
 	public String b6Text = "Menu";
+	
+	public String b1Results;
+	public String b2Results;
+	public String b3Results;
+	public String b4Results;
 	
 	Button b1 = new Button();
 	Button b2 = new Button();
@@ -49,6 +57,8 @@ public class GameGui extends Application
 	Button b6 = new Button();
 	
 	TextArea ta = new TextArea();
+	
+
 	
 	public void start(Stage primaryStage)
 	{	
@@ -155,7 +165,7 @@ public class GameGui extends Application
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		ta.appendText("There doesn't seem to be anything here\n");
+	  		ta.appendText(b1Results + "\n");
 	  	}
 	  }
 	  
@@ -164,7 +174,7 @@ public class GameGui extends Application
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		ta.appendText("There is no one here to talk to\n");
+	  		ta.appendText(b2Results + "\n");
 	  	}
 	  }
 	  
@@ -173,7 +183,7 @@ public class GameGui extends Application
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		ta.appendText("There doesn't seem to be a way forward\n");
+	  		ta.appendText(b3Results + "\n");
 	  	}
 	  }
 	  
@@ -182,7 +192,7 @@ public class GameGui extends Application
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		ta.appendText("You couldn't find anything to pick up\n");
+	  		ta.appendText(b4Results + "\n");
 	  	}
 	  }
 	  

@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 class Menu implements EventHandler<ActionEvent>{
 	
 	  Stage stage = new Stage();
+	  
 	  /**
 	   * Method: handle
 	   * 
