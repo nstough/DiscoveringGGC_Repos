@@ -1,3 +1,10 @@
+/* Title:       "Discovering GGC - PuzzleEvents Class"
+ * Description: This class is designed to provide the methods of all available events that the
+ *              player can encounter, as well as populating their location of encounter.
+ * Author:      Tim Nguyen
+ * Version:     0.1 (April 9, 2015 @ 11:40 AM)
+ */
+
 import java.util.ArrayList;
 import java.util.Random;
 
