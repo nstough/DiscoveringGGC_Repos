@@ -31,24 +31,29 @@ public class Teacher
 		questionIDBank = questionlist;
 	}
 	
-	public String getTeacherName(String name) //A method to get the teachers name
+	public String getTeacherName() //A method to get the teachers name
 	{
 		return teacherName;
 	}
 	
-	public int getTeacherID(int ID) //A method to get the teachers ID number
+	public int getTeacherID() //A method to get the teachers ID number
 	{
 		return teacherID;
 	}
 	
-	public int getSpawnChance(int chance) // a method to get the encounter chance of the teacher
+	public int getSpawnChance() // a method to get the encounter chance of the teacher
 	{
 		return spawnChance;
 	}
 	
-	public int[] getQuestionBank(int[] questionlist) //A method which gets the question back that the teacher can use
+	public String getQuestionBank() //A method which gets the question back that the teacher can use
 	{
-		return questionIDBank;
+		String temp = "";
+		for(int i = 0; i<questionIDBank.length;i++)
+		{
+			temp = temp + questionIDBank[i] + " " ;
+		}
+		return temp;
 	}
 	
 	public void setItemID (int item) // sets the reward to an item
@@ -56,7 +61,7 @@ public class Teacher
 		reward = item;
 	}
 	
-	public int getItemID (int item) // gets the item ID
+	public int getItemID () // gets the item ID
 	{
 		return reward;
 	}

@@ -46,12 +46,7 @@ public class Room
 	}
 	
 
-
-	public Room (int ID)
-	{
-		roomID = ID;
-	}
-	public Room(int ID,String des,int[] nextRooms) 
+	public Room(int ID,String des,int[] nextRooms) //Room generator. not much else to say
 	{
 		roomDes = des;
 		roomID = ID;
@@ -59,17 +54,17 @@ public class Room
 	
 	}
 		
-	public String getRoomInfo()
+	public String getRoomInfo() //Method that gives the room information is string form
 	{
 	return (roomDes + "\n" + roomID);
 	}
 
-	public void setPuzzles(int[] puzzlelist)
+	public void setPuzzles(int[] puzzlelist) //need team members piece to flesh out
 	{
 	puzzles = puzzlelist;
 	}
 
-	public void setTeachers(int[] teacherlist)
+	public void setTeachers(int[] teacherlist) //Method to set the possible teachers
 	{
 	teachers = teacherlist;
 	}

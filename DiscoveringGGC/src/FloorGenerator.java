@@ -6,7 +6,10 @@ import java.util.Random;
  * Description: Will have two ways to create the map. One with a set amount of rooms, another with a random amount. (within a limit)
  * It will also set the chances of each teacher and item appearing in the map. 
  * Author: John Holcombe
+ * NOTE:This is a basic Floor generator. I may need to split this class into multiple. There is still the random generation which i need to 
+ * finish. Comments are lessened due to them being redundant and cripples readability. Final class/classes will uphold better coding standards
  */
+
 public class FloorGenerator
 {
 	
@@ -14,9 +17,9 @@ public class FloorGenerator
 	
 	String admString = "The administration building. Finacial aid is available here"; // administration building Description
 	int[] admpaths = new int[2]; //administration bulding's path after the room is finished
-	Room adminisrationBuilding = new Room(1,admString,admpaths); //method that creates the room 
+	Room administrationBuilding = new Room(1,admString,admpaths); //method that creates the room 
 		
-	String gymString = "The Gym. College isn't just for exercising your brain";
+	String gymString = "The Gym. College isn't just for exercising your brain"; 
 	int[] gympaths = new int[2];
 	Room gym = new Room(2,gymString,gympaths);
 		
@@ -74,8 +77,8 @@ public class FloorGenerator
 		
 		public void layout() // creates the GGC campus. It creates the rooms for the game and designates which rooms lead to another.
 		{
-			list.add(0,adminisrationBuilding);
-			admpaths[0] = 2;
+			list.add(0,administrationBuilding); //adding the administration building
+			admpaths[0] = 2; //add the administrations available paths
 			admpaths[1] = 3;
 			
 			list.add(1,gym);
