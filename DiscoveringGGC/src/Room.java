@@ -15,11 +15,6 @@ public class Room
 	int[] adjacentRooms; //This is an array of rooms that the player may enter from this room
 	Random random = new Random();
 	
-	public void setRoomDescription(String Description) //method allowing the room description to be set
-	{
-		roomDes = Description;
-	}
-	
 	public String getRoomDescription() //method allowing the room description to be given to the player
 	{
 		return roomDes;
@@ -52,19 +47,31 @@ public class Room
 	
 
 
-public Room (int ID)
-{
-	roomID = ID;
-}
-public Room(int ID,String des,int[] nextRooms) {
-	roomDes = des;
-	roomID = ID;
-	adjacentRooms = nextRooms;
+	public Room (int ID)
+	{
+		roomID = ID;
+	}
+	public Room(int ID,String des,int[] nextRooms) 
+	{
+		roomDes = des;
+		roomID = ID;
+		adjacentRooms = nextRooms;
 	
-}
-
-public String getRoomInfo()
-{
+	}
+		
+	public String getRoomInfo()
+	{
 	return (roomDes + "\n" + roomID);
-}
+	}
+
+	public void setPuzzles(int[] puzzlelist)
+	{
+	puzzles = puzzlelist;
+	}
+
+	public void setTeachers(int[] teacherlist)
+	{
+	teachers = teacherlist;
+	}
+
 }
