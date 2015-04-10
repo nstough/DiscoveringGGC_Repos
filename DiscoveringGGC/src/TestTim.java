@@ -11,7 +11,7 @@ public class TestTim {
 	PuzzleEvents quests = new PuzzleEvents();
 	QuestionBank bank = new QuestionBank();
 	int totalCredits = 0; // In-game score. Higher points are better.
-	
+    
 	Scanner input = new Scanner(System.in); // Scanner object to allow user-timed pauses
 	
 	System.out.println("*** Test to display inventory. ***");
