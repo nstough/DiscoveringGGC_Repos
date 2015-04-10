@@ -3,7 +3,7 @@
  *              will encounter. Each puzzle will have their own ID, as well as toggles as to
  *              whether they have been encountered, completed, and succeeded.
  * Author:      Tim Nguyen
- * Version:     0.1 (April 6, 2015 @ 11:43 AM)
+ * Version:     0.2 (April 9, 2015 @ 11:25 PM)
  */
 
 public class Puzzles {
@@ -11,7 +11,6 @@ public class Puzzles {
   private String puzzleLocation = "null"; // Value to indicate the location of the puzzle.
   private boolean isAvailable = false; // Value to indicate if the puzzle is available.
   private boolean isCompleted = false; // Value to indicate if the puzzle is completed.
-  private boolean success = false; // Value to indicate if the puzzle is completed successfully.
   
   // Base constructor for a puzzle event.
   public Puzzles (int _puzzleID, String _puzzleLocation) {
@@ -39,11 +38,6 @@ public class Puzzles {
 	isCompleted = _isCompleted;
   }
   
-  // Set-Method for if the puzzle is completed successfully.
-  public void setSuccess(boolean _success) {
-	success = _success;
-  }
-  
   // Get-Method to obtain the puzzle ID.
   public int getPuzzleID() {
 	return puzzleID;
@@ -62,10 +56,5 @@ public class Puzzles {
   // Get-Method to obtain if the puzzle is completed.
   public boolean getIsCompleted() {
 	return isCompleted;
-  }
-  
-  // Get-Method to obtain if the puzzle is completed successfully.
-  public boolean getSuccess() {
-	return success;
   }
 }

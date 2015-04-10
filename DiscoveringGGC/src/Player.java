@@ -2,14 +2,15 @@
  * Description: This class is designed to hold the methods of the player's held items. It allows
  *              the player to add, remove, or display their inventory.
  * Author:      Tim Nguyen
- * Version:     0.1 (April 6, 2015 @ 11:39 AM)
+ * Version:     0.2 (April 9, 2015 @ 11:25 PM)
  */
 
 import java.util.ArrayList;
 
 public class Player {
-  static ArrayList<Items> inventory = new ArrayList<Items>();
-  int maxInventorySize = 4;
+  ArrayList<Items> inventory = new ArrayList<Items>();
+  private int maxInventorySize = 4;
+  private int bonus = 0; // "Free Miss"
   
   // Base constructor for the Player class, which allows the inventory to be properly populated
   // as empty.
@@ -17,6 +18,16 @@ public class Player {
 	for (int i = 0; i < maxInventorySize; i++) {
 	  inventory.add(new Items());
 	}
+  }
+  
+  // Set-method to set the number of bonus credits.
+  public void setBonus(int _bonus) {
+	bonus = _bonus;
+  }
+  
+  // Get-method to retrieve the number of bonus credits.
+  public int getBonus() {
+	return bonus;
   }
   
   // Method to add an item to the player's inventory.

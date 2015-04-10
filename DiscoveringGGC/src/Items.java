@@ -2,7 +2,7 @@
  * Description: This class is designed to hold the different items available in the game. Each
  *              item will have their own ID, which assigns a specific name.
  * Author:      Tim Nguyen
- * Version:     0.1 (April 6, 2015 @ 11:42 AM)
+ * Version:     0.2 (April 9, 2015 @ 11:25 PM)
  */
 
 public class Items {

@@ -2,7 +2,7 @@
  * Description: This class is designed to provide the methods of all available events that the
  *              player can encounter, as well as populating their location of encounter.
  * Author:      Tim Nguyen
- * Version:     0.1 (April 9, 2015 @ 11:40 AM)
+ * Version:     0.2 (April 9, 2015 @ 11:25 PM)
  */
 
 import java.util.ArrayList;
@@ -10,14 +10,14 @@ import java.util.Random;
 
 public class PuzzleEvents{
   Player user = new Player();
-  ArrayList<Puzzle> events = new ArrayList<Puzzle>();
+  ArrayList<Puzzles> events = new ArrayList<Puzzles>();
   
   // Base constructor to populate the possible events list with generic IDs.
   public PuzzleEvents() {
     Random rand = new Random();
 	
 	for (int i = 0; i < 10; i++) {
-      events.add(new Puzzle((i + 1), "A Building"));
+      events.add(new Puzzles((i + 1), "A Building"));
       
       // Switch-Statement that uses a random integer generator to set random locations to
       // each puzzle.
@@ -42,7 +42,7 @@ public class PuzzleEvents{
       // If-Else-Statement that will provide different events depending on if the player has
 	  // a specific item.
 	  if (hasRequirement(new Items(1))) {
-	    System.out.print("Oh hey! You found my binder. Thanks for the help. You can have " +
+	    System.out.println("Oh hey! You found my binder. Thanks for the help. You can have " +
 	    		"these scantrons. Some teachers will require you to have them to take their " +
 	    		"tests.");
 	    for (int i = 0; i < user.inventory.size(); i++) {
@@ -54,7 +54,6 @@ public class PuzzleEvents{
 		System.out.println("You have traded Michael's Binder for some scantrons.");
 		events.get(0).setIsAvailable(false);
 		events.get(0).setIsCompleted(true);
-		events.get(0).setSuccess(true);
 	  } else {
 	    System.out.println("Hey there, do you mind doing me a favor? I can't seem to find my " +
 	            "binder anywhere. If you see it, could you bring it to me? It has my name on " +
@@ -78,12 +77,12 @@ public class PuzzleEvents{
 		for (int i = 0; i < user.inventory.size(); i++) {
 		  if (hasRequirement(new Items(3))) {
 			user.removeItem(i);
+		    user.setBonus(user.getBonus() + 1);
 			break;
 		  }
 		}
 		events.get(1).setIsAvailable(false);
 		events.get(1).setIsCompleted(true);
-		events.get(1).setSuccess(true);
 	  } else {
 		System.out.println("Hey dude, sorry to bother you, but can you help a brother out? " +
 	            "I wanna join my friends in the dining hall, but I've got no cash, do you " +
@@ -106,12 +105,12 @@ public class PuzzleEvents{
     	for (int i = 0; i < user.inventory.size(); i++) {
     	  if (hasRequirement(new Items(2))) {
     		user.removeItem(i);
+		    user.setBonus(user.getBonus() + 1);
     		break;
     	  }
     	}
     	events.get(2).setIsAvailable(false);
     	events.get(2).setIsCompleted(true);
-    	events.get(2).setSuccess(true);
       } else {
     	System.out.println("Excuse me, but do you mind doing me a favor? I have  a test in " +
                 "my class and I don't have any scantrons. Do you think you could get a few " +
@@ -141,7 +140,6 @@ public class PuzzleEvents{
     	System.out.println("You have received a chicken sandwich for your efforts.");
     	events.get(3).setIsAvailable(false);
     	events.get(3).setIsCompleted(true);
-    	events.get(3).setSuccess(true);
       } else {
     	System.out.println("Hey bro, you mind doing me a favor? I seemed to have misplaced " +
                 "my claw card and I have gym class later today. Can you help me look for it?");
@@ -170,7 +168,6 @@ public class PuzzleEvents{
     	System.out.println("You have been gifted a coupon for the dining hall.");
     	events.get(4).setIsAvailable(false);
     	events.get(4).setIsCompleted(true);
-    	events.get(4).setSuccess(true);
       } else {
     	System.out.println("Hey you! Can you help me for a sec? It looks like its gonna rain " +
                 "and I can't seem to find my umbrella. If you see it, can you bring it to me? " +
@@ -193,13 +190,13 @@ public class PuzzleEvents{
     	for (int i = 0; i < user.inventory.size(); i++) {
     	  if (hasRequirement(new Items(6))) {
     		  user.inventory.get(i).setID(8);
+  		    user.setBonus(user.getBonus() + 1);
     		break;
     	  }
     	}
     	System.out.println("You have been given a tutor's card.");
     	events.get(5).setIsAvailable(false);
     	events.get(5).setIsCompleted(true);
-    	events.get(5).setSuccess(true);
       } else {
     	System.out.println("Hey, do you think you can do me a favor? I'm about to tutor " +
                 "someone and I'm really thirsty. I don't wanna get up since I think they'll " +
@@ -229,7 +226,6 @@ public class PuzzleEvents{
     	System.out.println("You have found someone's blue umbrella.");
     	events.get(6).setIsAvailable(false);
     	events.get(6).setIsCompleted(true);
-    	events.get(6).setSuccess(true);
       } else {
     	System.out.println("Hey, you think you can help me out? I've got a test next week " +
                 "and I think I'm gonna bomb. Oh, you haven't taken this class yet? Shame. " +
@@ -252,13 +248,13 @@ public class PuzzleEvents{
     			"one of your classes.");
     	for (int i = 0; i < user.inventory.size(); i++) {
     	  if (hasRequirement(new Items(7))) {
-    		  user.inventory.get(i).setID(0);
+    		user.inventory.get(i).setID(0);
+  		    user.setBonus(user.getBonus() + 1);
     		break;
     	  }
     	}
     	events.get(7).setIsAvailable(false);
     	events.get(7).setIsCompleted(true);
-    	events.get(7).setSuccess(true);
       } else {
     	System.out.println("Dude, you mind getting me something to eat? I'm hungry and got " +
                 "nothing left on my claw card.");
@@ -287,7 +283,6 @@ public class PuzzleEvents{
     	System.out.println("You have sold your pack of gum for a dollar.");
     	events.get(8).setIsAvailable(false);
     	events.get(8).setIsCompleted(true);
-    	events.get(8).setSuccess(true);
       } else {
     	System.out.println("Hey there. Sorry, I'm trying to study for a test and I can't be " +
                 "bothered right now.");
@@ -315,7 +310,6 @@ public class PuzzleEvents{
     	System.out.println("You have received a pack of gum.");
     	events.get(11).setIsAvailable(false);
     	events.get(11).setIsCompleted(true);
-    	events.get(11).setSuccess(true);
       } else {
     	System.out.println("Hey dude, can you help me out? I just got out of class and can't " +
     			"find my phone. Can you help me find it?");
