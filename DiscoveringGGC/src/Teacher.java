@@ -9,6 +9,7 @@ public class Teacher
 	int teacherID; //this is an identifier for the teacher
 	int spawnChance; //This is the percent chance that you will encounter this teacher
 	int[] questionIDBank; //this is an array of possible questions that the teacher may ask 
+	int reward; //This is the ItemID if the teacher gives a reward to the player
 	
 	public void setTeacherName(String name) //A method to set the teachers name
 	{
@@ -50,5 +51,14 @@ public class Teacher
 		return questionIDBank;
 	}
 	
+	public void setItemID (int item) // sets the reward to an item
+	{
+		reward = item;
+	}
+	
+	public int getItemID (int item) // gets the item ID
+	{
+		return reward;
+	}
 	
 }

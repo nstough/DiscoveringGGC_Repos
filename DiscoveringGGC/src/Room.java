@@ -15,14 +15,19 @@ public class Room
 	int[] adjacentRooms; //This is an array of rooms that the player may enter from this room
 	Random random = new Random();
 	
-	public String getRoomDescription() //method allowing the the room description to be given to the player
+	public void setRoomDescription(String Description) //method allowing the room description to be set
+	{
+		roomDes = Description;
+	}
+	
+	public String getRoomDescription() //method allowing the room description to be given to the player
 	{
 		return roomDes;
 	}
 	
-	public boolean encounterTeacher(int chance) //chance to encounter the teacher and a method to check if you run into them
+	public boolean encounterTeacher(int chance, boolean hasMet) //chance to encounter the teacher and a method to check if you run into them
 	{
-		if( chance >= random.nextInt(100) + 1) //if statement to roll your chance
+		if( (chance >= random.nextInt(100) + 1) && hasMet == false) //if statement to roll your chance
 		{
 			return true;
 		}
@@ -33,9 +38,9 @@ public class Room
 		
 	}
 	
-	public boolean encounterPuzzle(int chance) //chance to encounter a puzzle if you did not encounter a teacher
+	public boolean encounterPuzzle(int chance, boolean hasFound) //chance to encounter a puzzle if you did not encounter a teacher
 	{
-		if( chance >= random.nextInt(100) + 1) //if statement to roll your chance
+		if( (chance >= random.nextInt(100) + 1) && hasFound == false) //if statement to roll your chance
 		{
 			return true;
 		}
@@ -45,4 +50,21 @@ public class Room
 		}
 	}
 	
+
+
+public Room (int ID)
+{
+	roomID = ID;
+}
+public Room(int ID,String des,int[] nextRooms) {
+	roomDes = des;
+	roomID = ID;
+	adjacentRooms = nextRooms;
+	
+}
+
+public String getRoomInfo()
+{
+	return (roomDes + "\n" + roomID);
+}
 }
