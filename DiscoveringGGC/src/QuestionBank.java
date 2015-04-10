@@ -11,7 +11,7 @@ public class QuestionBank {
   Question[] easyList = new Question[5]; // Basic questions that are taught in early schooling.
   Question[] interList = new Question[5]; // Basic questions that are taught in early schooling.
   Question[] hardList = new Question[5]; // Basic questions that most elementary schoolers know.
-  Question bonusQuestion = new Question("");
+  Question bonusQuestion = new Question();
   
   // Base constructor to populate each array with questions and answers.
   public QuestionBank() {
