@@ -14,7 +14,7 @@ public class Question {
   private int correctAnswer = 5; // Value to indicate the correct answer.
   private boolean used = false;
   
-  // Base constructor to provide a blank quesiton.
+  // Base constructor to provide a blank question.
   public Question() {
 	query = "";
   }

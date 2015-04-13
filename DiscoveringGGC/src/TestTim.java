@@ -162,7 +162,6 @@ public class TestTim {
 }
 
 /* Author's Note:
- * - Ask John about "bonus" and whether it can work with question banks.
  * - "user" object from "PuzzleEvents" class needs to transfer to main file after each action.
  * - Find a better way to decrement "bonus" variable.
  */
