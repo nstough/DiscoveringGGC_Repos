@@ -110,6 +110,11 @@ class Menu implements EventHandler<ActionEvent>{
 	  	}
 	  }
 	  
+	  /**
+	   * Class: loadFile
+	   * @author Nick
+	   *
+	   */
 	  class loadFile implements EventHandler<ActionEvent>
 	  {
 	  	@Override
