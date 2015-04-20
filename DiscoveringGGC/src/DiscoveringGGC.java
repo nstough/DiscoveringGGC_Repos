@@ -1,7 +1,8 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class DiscoveringGGC extends Application {
+public class DiscoveringGGC
+{
 	
 	GameGui gui = new GameGui();
 	
@@ -11,12 +12,8 @@ public class DiscoveringGGC extends Application {
 	FloorGenerator floor = new FloorGenerator(); 
 	floor.layout();
 	
-	
+	DiscoveringGGC.run(gui);
 	}
 
-	@Override
-	public void start(Stage arg0) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+
 }
