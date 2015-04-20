@@ -294,7 +294,7 @@ public class GameGui extends Application implements Runnable
 	@Override
 	public void run()
 	{
-		GameGui.launch();
+		launch();
 		
 	}
 }
