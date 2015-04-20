@@ -28,7 +28,7 @@ import javafx.stage.Stage;
  * @author Nick
  *
  */
-public class GameGui extends Application
+public class GameGui extends Application implements Runnable
 {
 	//Instance of Game
 	public Game myGame = new Game();
@@ -287,4 +287,14 @@ public class GameGui extends Application
 
 	  	}
 	  }
+
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
+	@Override
+	public void run()
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }
