@@ -22,6 +22,12 @@ public class Game
 	public String b3Results;
 	public String b4Results;
 	
+	//The display strings for the buttons
+	public String b1Text;
+	public String b2Text;
+	public String b3Text;
+	public String b4Text;
+	
 	/**
 	 * Default Game Constructor
 	 */
@@ -30,7 +36,94 @@ public class Game
 		this.b2Results = "";
 		this.b3Results = "";
 		this.b4Results = "";
+		
+		this.b1Text = "";
+		this.b2Text = "";
+		this.b3Text = "";
+		this.b4Text = "";
 	}
+
+	
+	
+	/**
+	 * @return the b1Text
+	 */
+	public String getB1Text()
+	{
+		return b1Text;
+	}
+
+
+
+	/**
+	 * @return the b2Text
+	 */
+	public String getB2Text()
+	{
+		return b2Text;
+	}
+
+
+
+	/**
+	 * @return the b3Text
+	 */
+	public String getB3Text()
+	{
+		return b3Text;
+	}
+
+
+
+	/**
+	 * @return the b4Text
+	 */
+	public String getB4Text()
+	{
+		return b4Text;
+	}
+
+
+
+	/**
+	 * @param b1Text the b1Text to set
+	 */
+	public void setB1Text(String b1Text)
+	{
+		this.b1Text = b1Text;
+	}
+
+
+
+	/**
+	 * @param b2Text the b2Text to set
+	 */
+	public void setB2Text(String b2Text)
+	{
+		this.b2Text = b2Text;
+	}
+
+
+
+	/**
+	 * @param b3Text the b3Text to set
+	 */
+	public void setB3Text(String b3Text)
+	{
+		this.b3Text = b3Text;
+	}
+
+
+
+	/**
+	 * @param b4Text the b4Text to set
+	 */
+	public void setB4Text(String b4Text)
+	{
+		this.b4Text = b4Text;
+	}
+
+
 
 	/**
 	 * @return the b1Results

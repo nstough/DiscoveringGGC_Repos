@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -137,7 +138,6 @@ public class GameGui extends Application implements Runnable
 			b6.setLayoutY(350);
 			b6.setOnAction(handler6);
 		
-			
 		//Setting the text for the buttons
 		b1.setText(b1Text);
 		b2.setText(b2Text);
@@ -186,6 +186,11 @@ public class GameGui extends Application implements Runnable
 	  	public void handle(ActionEvent e)
 	  	{
 	  		ta.appendText(b1Results + "\n");
+	  		
+  			b1.setText(b1Text);
+  			b2.setText(b2Text);
+  			b3.setText(b3Text);
+  			b4.setText(b4Text); 		
 	  	}
 	  }
 	  
@@ -200,6 +205,11 @@ public class GameGui extends Application implements Runnable
 	  	public void handle(ActionEvent e)
 	  	{
 	  		ta.appendText(b2Results + "\n");
+	  		
+  			b1.setText(b1Text);
+  			b2.setText(b2Text);
+  			b3.setText(b3Text);
+  			b4.setText(b4Text); 
 	  	}
 	  }
 	  
@@ -214,6 +224,11 @@ public class GameGui extends Application implements Runnable
 	  	public void handle(ActionEvent e)
 	  	{
 	  		ta.appendText(b3Results + "\n");
+	  		
+  			b1.setText(b1Text);
+  			b2.setText(b2Text);
+  			b3.setText(b3Text);
+  			b4.setText(b4Text); 
 	  	}
 	  }
 	  
@@ -228,6 +243,11 @@ public class GameGui extends Application implements Runnable
 	  	public void handle(ActionEvent e)
 	  	{
 	  		ta.appendText(b4Results + "\n");
+	  		
+  			b1.setText(b1Text);
+  			b2.setText(b2Text);
+  			b3.setText(b3Text);
+  			b4.setText(b4Text); 
 	  	}
 	  }
 	  
@@ -258,12 +278,7 @@ public class GameGui extends Application implements Runnable
 	  		}
 	  		else if(b5Text.equalsIgnoreCase("back")){
 	  			b5Text = "Inventory";
-	  			
-	  			b1Text = "Investigate";
-	  			b2Text = "Talk to";
-	  			b3Text = "Walk Forward";
-	  			b4Text = "Pick Up";
-	  			
+	 			
 	  			b1.setText(b1Text);
 	  			b2.setText(b2Text);
 	  			b3.setText(b3Text);
@@ -271,20 +286,6 @@ public class GameGui extends Application implements Runnable
 	  			b5.setText(b5Text);
 	  			b6.setText(b6Text);
 	  		}
-	  	}
-	  }
-	  
-	  /**
-	   * 
-	   * @author Nick
-	   * Handles what happens when the menu is pressed
-	   */
-	  class b6Action implements EventHandler<ActionEvent>
-	  {
-	  	@Override
-	  	public void handle(ActionEvent e)
-	  	{
-
 	  	}
 	  }
 
@@ -297,4 +298,6 @@ public class GameGui extends Application implements Runnable
 		launch();
 		
 	}
+	
+	
 }
