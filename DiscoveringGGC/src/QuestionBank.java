@@ -176,6 +176,31 @@ public class QuestionBank {
 	bonusQuestion.setCorrectAnswer(3);
   }
   
+  // Get-Method to retrieve the ggcList array.
+  public Question[] getGGCList() {
+	return ggcList;
+  }
+  
+  // Get-Method to retrieve the easyList array.
+  public Question[] getEasyList() {
+	return easyList;
+  }
+  
+  // Get-Method to retrieve the interList array.
+  public Question[] getInterList() {
+	return interList;
+  }
+  
+  // Get-Method to retrieve the hardList array.
+  public Question[] getHardList() {
+	return hardList;
+  }
+  
+  // Get-Method to retrieve the bonus question.
+  public Question getBonusQuestion() {
+	return bonusQuestion;
+  }
+  
   // Method to check if the user choice for a question is right or wrong. True is right, false is wrong.
   public boolean isCorrect(Question query, int choice, int bonus) {
 	if (query.getCorrectAnswer() == choice) {
