@@ -27,7 +27,7 @@ import javafx.stage.Stage;
  * Edited April 21, 2015 (9:34 PM) by Tim Nguyen
  * - Adjusted inventory buttons to properly display inventory.
  * - Added a method to provide inventory actions
- * - Added a "user" Player-Object and a method for over-write saving the variable.
+ * - Added a "user" Player-Object.
  */
 
 /**
@@ -40,7 +40,7 @@ public class GameGui extends Application implements Runnable
 	public Game myGame = new Game();
 	
 	//Instance of Player
-	public Player user = new Player();
+	private Player user = new Player();
 	
 	//Just change as you go
 	public String version = "0.5";
@@ -193,12 +193,11 @@ public class GameGui extends Application implements Runnable
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		ta.appendText(b1Results + "\n");
-	  		
-  			b1.setText(b1Text);
-  			b2.setText(b2Text);
-  			b3.setText(b3Text);
-  			b4.setText(b4Text); 		
+	  		if (!b5Text.equalsIgnoreCase("inventory")) {
+	  		  inventoryAction(1);
+	  		} else {
+	  		  ta.appendText("Button 1 has been pressed.\n");
+	  		}
 	  	}
 	  }
 	  
@@ -212,12 +211,11 @@ public class GameGui extends Application implements Runnable
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		ta.appendText(b2Results + "\n");
-	  		
-  			b1.setText(b1Text);
-  			b2.setText(b2Text);
-  			b3.setText(b3Text);
-  			b4.setText(b4Text); 
+	  		if (!b5Text.equalsIgnoreCase("inventory")) {
+		  	  inventoryAction(2);
+		  	} else {
+		  	  ta.appendText("Button 2 has been pressed.\n");
+		  	}
 	  	}
 	  }
 	  
@@ -231,12 +229,11 @@ public class GameGui extends Application implements Runnable
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		ta.appendText(b3Results + "\n");
-	  		
-  			b1.setText(b1Text);
-  			b2.setText(b2Text);
-  			b3.setText(b3Text);
-  			b4.setText(b4Text); 
+	  		if (!b5Text.equalsIgnoreCase("inventory")) {
+		  	  inventoryAction(3);
+		  	} else {
+		  	  ta.appendText("Button 3 has been pressed.\n");
+		  	}
 	  	}
 	  }
 	  
@@ -250,12 +247,11 @@ public class GameGui extends Application implements Runnable
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		ta.appendText(b4Results + "\n");
-	  		
-  			b1.setText(b1Text);
-  			b2.setText(b2Text);
-  			b3.setText(b3Text);
-  			b4.setText(b4Text); 
+	  		if (!b5Text.equalsIgnoreCase("inventory")) {
+		  	  inventoryAction(4);
+		  	} else {
+		  	  ta.appendText("Button 4 has been pressed.\n");
+		  	}
 	  	}
 	  }
 	  
@@ -307,12 +303,12 @@ public class GameGui extends Application implements Runnable
 		}
 	  }
 	  
-	  if (questActive[user.getInventory().get(buttonNumber).getQuestID() - 1]) {
+	  if (questActive[user.getInventory().get(buttonNumber - 1).getQuestID() - 1]) {
 		act = true;
 	  }
 	  
 	  if (act) {
-		switch(user.getInventory().get(buttonNumber).getQuestID()) {
+		switch(user.getInventory().get(buttonNumber - 1).getQuestID()) {
 		  case  1: PuzzleEvents.endEvent01();
 		           break;
 		  case  2: PuzzleEvents.endEvent02();
@@ -336,7 +332,7 @@ public class GameGui extends Application implements Runnable
 	      default: break;
 		}
 	  } else {
-	    ta.appendText(user.getInventory().get(buttonNumber).getItemName() + "\n");
+	    ta.appendText(user.getInventory().get(buttonNumber - 1).getItemName() + "\n");
 	  }
 	}
 

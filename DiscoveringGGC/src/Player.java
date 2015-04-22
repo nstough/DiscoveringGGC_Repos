@@ -20,6 +20,12 @@ public class Player {
 	}
   }
   
+  // Complex constructor to which the variables are set to copy a pre-defined player-object.
+  public Player(Player player) {
+	inventory = player.getInventory();
+	bonus = player.getBonus();
+  }
+  
   // Set-method to set the inventory to a pre-defined list.
   public void setInventory(ArrayList<Items> inventory) {
 	this.inventory = inventory;
@@ -28,6 +34,16 @@ public class Player {
   // Set-method to set the number of bonus credits.
   public static void setBonus(int _bonus) {
 	bonus = _bonus;
+  }
+  
+  // Get-method to retrieve the full detail of the player.
+  public Player getPlayer() {
+	Player user = new Player();
+	
+	user.inventory = this.inventory;
+	user.bonus = this.bonus;
+	
+	return user;
   }
   
   // Get-method to retrieve the inventory.

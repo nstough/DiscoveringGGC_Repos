@@ -12,6 +12,13 @@ public class TestTim{
 	QuestionBank bank = new QuestionBank();
 	int totalCredits = 0; // In-game score. Higher points are better.
     
+	GameGui game = new GameGui();
+	
+	game.run();
+	
+	quests.addItem(1);
+	
+	/*
 	Scanner input = new Scanner(System.in); // Scanner object to allow user-timed pauses
 	
 	System.out.println("*** Test to display inventory. ***");
@@ -156,7 +163,7 @@ public class TestTim{
 	
 	System.out.println("*** All tests have been encountered. Please retrieve notes. Ending simulation. ***");
 	
-	input.close(); // Close the scanner.
+	input.close(); // Close the scanner.*/
 	System.exit(0); // End the test.
   }
 }
