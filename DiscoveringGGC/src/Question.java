@@ -20,43 +20,43 @@ public class Question {
   }
   
   // Specific constructor to provide a question.
-  public Question(String _query) {
-	query = _query;
+  public Question(String query) {
+	this.query = query;
   }
   
   // Set-method to provide a query.
-  public void setQuery(String _query) {
-	query = _query;
+  public void setQuery(String query) {
+	this.query = query;
   }
   
   // Set-method to provide an answer.
-  public void setAns1(String ans) {
-	ans1 = ans; 
+  public void setAns1(String ans1) {
+	this.ans1 = ans1; 
   }
   
   // Set-method to provide an answer.
-  public void setAns2(String ans) {
-	ans2 = ans;
+  public void setAns2(String ans2) {
+    this.ans2 = ans2;
   }
   
   // Set-method to provide an answer.
-  public void setAns3(String ans) {
-	ans3 = ans;
+  public void setAns3(String ans3) {
+	this.ans3 = ans3;
   }
   
   // Set-method to provide an answer.
-  public void setAns4(String ans) {
-	ans4 = ans;
+  public void setAns4(String ans4) {
+	this.ans4 = ans4;
   }
   
   // Set-method to make a certain answer a correct answer.
-  public void setCorrectAnswer(int val) {
-	correctAnswer = val;
+  public void setCorrectAnswer(int correctAnswer) {
+	this.correctAnswer = correctAnswer;
   }
   
   // set-method to determine if the question is used.
-  public void setUsed(boolean _used) {
-	used = _used;
+  public void setUsed(boolean used) {
+	this.used = used;
   }
   
   // Get-method to retrieve the query.

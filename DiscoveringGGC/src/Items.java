@@ -7,25 +7,59 @@
 
 public class Items {
   private int itemID;
+  private int questID;
   
   // Base constructor for an item.  
   public Items() {
     itemID = 0;
+    questID = 0;
   }
   
   // Base constructor for a specific item.
-  public Items(int _itemID) {
-	itemID = _itemID;
+  public Items(int itemID) {
+	this.itemID = itemID;
   }
   
   // Set-Method to set an item's ID.
-  public void setID(int _itemID) {
-	itemID = _itemID;
+  public void setID(int itemID) {
+	this.itemID = itemID;
+  }
+  
+  // Set-Method to set an item's quest ID.
+  public void setQuestID() {
+	switch(itemID) {
+	  case  1: questID = 1;
+		       break;
+	  case  2: questID = 3;
+	           break;
+	  case  3: questID = 2;
+	           break;
+	  case  4: questID = 4;
+	           break;
+	  case  5: questID = 5;
+	           break;
+	  case  6: questID = 6;
+	           break;
+	  case  7: questID = 8;
+	           break;
+	  case  8: questID = 7;
+	           break;
+	  case  9: questID = 9;
+	           break;
+	  case 11: questID = 10;
+	           break;
+	  default: break;
+	}
   }
   
   // Get-Method to retrieve item's ID.
   public int getID() {
 	return itemID;
+  }
+  
+  // Get-Method to retrieve the item's quest ID.
+  public int getQuestID() {
+	return questID;
   }
   
   // Populating the available Item IDs with names.
@@ -55,7 +89,7 @@ public class Items {
 	           break;
 	  case 11: name = "Carl's Phone";
 	           break;
-	  default: name = "null";
+	  default: name = "==EMPTY==";
 	           break;
 	}
 	

@@ -23,6 +23,11 @@ import javafx.stage.Stage;
  * This class builds a Gui for the game and will accept input from the Game class
  *
  * Purpose: The purpose is to give the user a graphical interface for the game
+ * 
+ * Edited April 21, 2015 (9:34 PM) by Tim Nguyen
+ * - Adjusted inventory buttons to properly display inventory.
+ * - Added a method to provide inventory actions
+ * - Added a "user" Player-Object and a method for over-write saving the variable.
  */
 
 /**
@@ -33,6 +38,9 @@ public class GameGui extends Application implements Runnable
 {
 	//Instance of Game
 	public Game myGame = new Game();
+	
+	//Instance of Player
+	public Player user = new Player();
 	
 	//Just change as you go
 	public String version = "0.5";
@@ -264,15 +272,10 @@ public class GameGui extends Application implements Runnable
 	  		if(b5Text.equalsIgnoreCase("inventory")){
 	  			b5Text = "Back";
 	  			
-	  			b1Text = "Water Bottle";
-	  			b2Text = "Notebook";
-	  			b3Text = "Wallet";
-	  			b4Text = "Rock";
-	  			
-	  			b1.setText(b1Text);
-	  			b2.setText(b2Text);
-	  			b3.setText(b3Text);
-	  			b4.setText(b4Text);
+	  			b1.setText(user.getInventory().get(0).getItemName());
+	  			b2.setText(user.getInventory().get(1).getItemName());
+	  			b3.setText(user.getInventory().get(2).getItemName());
+	  			b4.setText(user.getInventory().get(3).getItemName());
 	  			b5.setText(b5Text);
 	  			b6.setText(b6Text);
 	  		}
@@ -288,6 +291,54 @@ public class GameGui extends Application implements Runnable
 	  		}
 	  	}
 	  }
+	
+	/* 
+	 * Method designed to perform actions based on the player's inventory and active quests.
+	 */
+	public void inventoryAction(int buttonNumber) {
+	  boolean act = false;
+	  boolean[] questActive = new boolean[PuzzleEvents.events.size()];
+	  
+	  for (int i = 0; i < PuzzleEvents.events.size(); i++) {
+		if (PuzzleEvents.events.get(i).getIsActive()) {
+		  questActive[i] = true;
+		} else {
+		  questActive[i] = false;
+		}
+	  }
+	  
+	  if (questActive[user.getInventory().get(buttonNumber).getQuestID() - 1]) {
+		act = true;
+	  }
+	  
+	  if (act) {
+		switch(user.getInventory().get(buttonNumber).getQuestID()) {
+		  case  1: PuzzleEvents.endEvent01();
+		           break;
+		  case  2: PuzzleEvents.endEvent02();
+		           break;
+		  case  3: PuzzleEvents.endEvent03();
+		           break;
+		  case  4: PuzzleEvents.endEvent04();
+		           break;
+		  case  5: PuzzleEvents.endEvent05();
+		           break;
+		  case  6: PuzzleEvents.endEvent06();
+		           break;
+		  case  7: PuzzleEvents.endEvent07();
+		           break;
+		  case  8: PuzzleEvents.endEvent08();
+			       break;
+		  case  9: PuzzleEvents.endEvent09();
+		           break;
+		  case 10: PuzzleEvents.endEvent10();
+		           break;
+	      default: break;
+		}
+	  } else {
+	    ta.appendText(user.getInventory().get(buttonNumber).getItemName() + "\n");
+	  }
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
