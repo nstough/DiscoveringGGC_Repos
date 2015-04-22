@@ -1,3 +1,4 @@
+/DiscoveringGGC.class
 /FloorGenerator.class
 /FloorTester.class
 /Game.class
@@ -6,5 +7,18 @@
 /GameGui$b3Action.class
 /GameGui$b4Action.class
 /GameGui$b5Action.class
-/GameGui$b6Action.class
 /GameGui.class
+/Items.class
+/Menu$CloseMenu.class
+/Menu$loadFile.class
+/Menu$writeFile.class
+/Menu.class
+/Player.class
+/PuzzleEvents.class
+/Puzzles.class
+/Question.class
+/QuestionBank.class
+/Room.class
+/Teacher.class
+/TeacherTester.class
+/TestTim.class

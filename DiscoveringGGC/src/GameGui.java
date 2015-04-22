@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+// Logic so that the buttons say the appropriate action and do the appropriate action at all times
 // John was here
 /**Class: GameGui
  * @author Nick Stough
@@ -42,6 +43,9 @@ public class GameGui extends Application implements Runnable
 	//Instance of Player
 	private Player user = new Player();
 	
+	//Creates a question bank for the game
+	QuestionBank bank = new QuestionBank();
+	
 	//Just change as you go
 	public String version = "0.5";
 	
@@ -50,6 +54,13 @@ public class GameGui extends Application implements Runnable
 	public String b2Text = "Talk";
 	public String b3Text = "";
 	public String b4Text = "Map";
+	
+	//The text that will be displayed after the button is clicked
+	private String b1Clicked = "";
+	private String b2Clicked = "";
+	private String b3Clicked = "";
+	private String b4Clicked = "";
+	
 	
 	//Text displayed on the right hand buttons
 	public String b5Text = "Inventory";
@@ -179,6 +190,7 @@ public class GameGui extends Application implements Runnable
 
 	public static void main(String[] args)
 	{		
+		
 		//Starts the gui
 		launch(args);
 	}
@@ -196,7 +208,10 @@ public class GameGui extends Application implements Runnable
 	  		if (!b5Text.equalsIgnoreCase("inventory")) {
 	  		  inventoryAction(1);
 	  		} else {
-	  		  ta.appendText("Button 1 has been pressed.\n");
+	  			
+	  		  ta.appendText(b1Clicked);
+	  		  b1.setText(b1Text);
+	  		  //b1Text = "";
 	  		}
 	  	}
 	  }
@@ -214,7 +229,8 @@ public class GameGui extends Application implements Runnable
 	  		if (!b5Text.equalsIgnoreCase("inventory")) {
 		  	  inventoryAction(2);
 		  	} else {
-		  	  ta.appendText("Button 2 has been pressed.\n");
+		  	  ta.appendText(b2Clicked);
+		  	  b2.setText(b2Text);
 		  	}
 	  	}
 	  }
@@ -232,7 +248,8 @@ public class GameGui extends Application implements Runnable
 	  		if (!b5Text.equalsIgnoreCase("inventory")) {
 		  	  inventoryAction(3);
 		  	} else {
-		  	  ta.appendText("Button 3 has been pressed.\n");
+		  		ta.appendText(b3Clicked);
+			  	  b3.setText(b3Text);
 		  	}
 	  	}
 	  }
@@ -250,7 +267,9 @@ public class GameGui extends Application implements Runnable
 	  		if (!b5Text.equalsIgnoreCase("inventory")) {
 		  	  inventoryAction(4);
 		  	} else {
-		  	  ta.appendText("Button 4 has been pressed.\n");
+		  		
+		  		ta.appendText(b4Clicked);
+			  	  b4.setText(b4Text);
 		  	}
 	  	}
 	  }
