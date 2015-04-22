@@ -46,9 +46,9 @@ public class GameGui extends Application implements Runnable
 	public String version = "0.5";
 	
 	//The text that is displayed on the buttons
-	public String b1Text = "Investigate";
-	public String b2Text = "Talk";
-	public String b3Text = "";
+	public String b1Text = "Observe";
+	public String b2Text = "Investigate";
+	public String b3Text = "Talk";
 	public String b4Text = "Map";
 	
 	//Text displayed on the right hand buttons
