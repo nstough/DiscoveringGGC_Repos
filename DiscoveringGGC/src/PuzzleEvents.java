@@ -10,12 +10,13 @@ import java.util.Random;
 
 public class PuzzleEvents extends Player{
   static ArrayList<Puzzles> events = new ArrayList<Puzzles>();
+  final static int EVENT_SIZE = 10;
   
   // Base constructor to populate the possible events list with generic IDs.
   public PuzzleEvents() {
     Random rand = new Random();
 	
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < EVENT_SIZE; i++) {
       events.add(new Puzzles((i + 1), "A Building"));
       
       // Switch-Statement that uses a random integer generator to set random locations to

@@ -6,8 +6,8 @@
  */
 
 public class Items {
-  private int itemID;
-  private int questID;
+  private int itemID = 0;
+  private int questID = 0;
   
   // Base constructor for an item.  
   public Items() {

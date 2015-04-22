@@ -46,10 +46,10 @@ public class GameGui extends Application implements Runnable
 	public String version = "0.5";
 	
 	//The text that is displayed on the buttons
-	public String b1Text = "Default";
-	public String b2Text = "Default";
-	public String b3Text = "Default";
-	public String b4Text = "Default";
+	public String b1Text = "Investigate";
+	public String b2Text = "Talk";
+	public String b3Text = "";
+	public String b4Text = "Map";
 	
 	//Text displayed on the right hand buttons
 	public String b5Text = "Inventory";
@@ -118,14 +118,14 @@ public class GameGui extends Application implements Runnable
 		
 			b2.setPrefWidth(145);
 			b2.setPrefHeight(35);
-			b2.setLayoutX(15);
-			b2.setLayoutY(350);
+			b2.setLayoutX(170);
+			b2.setLayoutY(300);
 			b2.setOnAction(handler2);
 
 			b3.setPrefWidth(145);
 			b3.setPrefHeight(35);
-			b3.setLayoutX(170);
-			b3.setLayoutY(300);
+			b3.setLayoutX(15);
+			b3.setLayoutY(350);
 			b3.setOnAction(handler3);
 			
 			b4.setPrefWidth(145);
@@ -293,7 +293,7 @@ public class GameGui extends Application implements Runnable
 	 */
 	public void inventoryAction(int buttonNumber) {
 	  boolean act = false;
-	  boolean[] questActive = new boolean[PuzzleEvents.events.size()];
+	  boolean[] questActive = new boolean[PuzzleEvents.EVENT_SIZE];
 	  
 	  for (int i = 0; i < PuzzleEvents.events.size(); i++) {
 		if (PuzzleEvents.events.get(i).getIsActive()) {
@@ -303,7 +303,7 @@ public class GameGui extends Application implements Runnable
 		}
 	  }
 	  
-	  if (questActive[user.getInventory().get(buttonNumber - 1).getQuestID() - 1]) {
+	  if (questActive[user.getInventory().get(buttonNumber - 1).getQuestID()]) {
 		act = true;
 	  }
 	  
