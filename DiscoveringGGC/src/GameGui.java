@@ -46,6 +46,13 @@ public class GameGui extends Application implements Runnable
 	//Creates a question bank for the game
 	QuestionBank bank = new QuestionBank();
 	
+	//Creates a multiple booleans so the buttons know what they need to display
+	boolean isQuestion = false;
+	boolean isDirection = false;
+	boolean isPuzzle = false;
+	
+	String next = "Need to make something that tells the buttons what they need to say";
+	
 	//Just change as you go
 	public String version = "0.5";
 	
@@ -56,7 +63,7 @@ public class GameGui extends Application implements Runnable
 	public String b4Text = "Map";
 	
 	//The text that will be displayed after the button is clicked
-	private String b1Clicked = "";
+	private String b1Clicked = "You clicked button 1";
 	private String b2Clicked = "";
 	private String b3Clicked = "";
 	private String b4Clicked = "";
@@ -207,11 +214,21 @@ public class GameGui extends Application implements Runnable
 	  	{
 	  		if (!b5Text.equalsIgnoreCase("inventory")) {
 	  		  inventoryAction(1);
-	  		} else {
-	  			
+	  		} else if (isQuestion == true) {
+	  			isQuestion = false;
+	  			System.out.println("Question deactivataed");
+	  			b1Text = next;
 	  		  ta.appendText(b1Clicked);
 	  		  b1.setText(b1Text);
+	  		  
 	  		  //b1Text = "";
+	  		} else if (isPuzzle == true) {
+	  			
+	  		} else if (isDirection == true) {
+	  			
+	  		} else {
+	  			isQuestion = true;
+	  			System.out.println("Question activataed");
 	  		}
 	  	}
 	  }
