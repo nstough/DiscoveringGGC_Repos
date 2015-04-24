@@ -230,7 +230,8 @@ public class GameGui extends Application implements Runnable
 	  			isQuestion = false;
 	  			System.out.println("Question deactivataed");
 	  			b1Text = bank.getEasyList()[questionNum].getAns1();
-	  		  ta.appendText(b1Clicked);
+	  			questionNum++;
+	  		  ta.appendText(b1Clicked + "\n");
 	  		  b1.setText(b1Text);
 	  		  
 	  		  
