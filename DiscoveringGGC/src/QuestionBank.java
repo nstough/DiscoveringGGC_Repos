@@ -41,7 +41,7 @@ public class QuestionBank {
 	list[3].setAns2("1");
 	list[3].setAns3("2");
 	list[3].setAns4("3");
-	list[3].setCorrectAnswer(2);
+	list[3].setCorrectAnswer(3);
 	
 	list[4].setQuery("\"What is another term that this college uses for their Student IDs?\"");
 	list[4].setAns1("Claw Card");

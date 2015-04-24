@@ -249,9 +249,6 @@ public class GameGui extends Application implements Runnable
 	  			//observe
 	  			//map
 	  			//whatever else you can do in a room
-	  			isQuestion = true;
-	  			System.out.println("Question activated");
-	  			questionAction();
 	  		}
 	  	}
 	  }
@@ -287,9 +284,6 @@ public class GameGui extends Application implements Runnable
 		  			//observe
 		  			//map
 		  			//whatever else you can do in a room
-		  			isQuestion = true;
-		  			System.out.println("Question activated");
-		  			questionAction();
 		  		}
 	  	}
 	  }
@@ -363,9 +357,6 @@ public class GameGui extends Application implements Runnable
 		  			//observe
 		  			//map
 		  			//whatever else you can do in a room
-		  			isQuestion = true;
-		  			System.out.println("Question activated");
-		  			questionAction();
 		  		}
 	  	}
 	  }
