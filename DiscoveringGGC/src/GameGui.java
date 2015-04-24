@@ -51,6 +51,7 @@ public class GameGui extends Application implements Runnable
 	boolean isDirection = false;
 	boolean isPuzzle = false;
 	boolean isAnswering = false;
+	boolean isMap = false;
 	
 	String next = "Need to make something that tells the buttons what they need to say";
 	
@@ -229,19 +230,23 @@ public class GameGui extends Application implements Runnable
 	  		} else if (isQuestion == true) {
 	  			isQuestion = false;
 	  			System.out.println("Question deactivataed");
-	  			b1Text = bank.getEasyList()[questionNum].getAns1();
+	  			b1Text = bank.getList()[questionNum].getAns1();
 	  			questionNum++;
 	  		  ta.appendText(b1Clicked + "\n");
 	  		  b1.setText(b1Text);
 	  		  
 	  		  
 	  		} else if (isPuzzle == true) {
-	  			
+	  			isPuzzle = false;
 	  		} else if (isAnswering == true) {
-	  			
+	  			isAnswering = false;
+	  		} else if (isMap == true) {
+	  			isMap = false;
 	  		} else if (isDirection == true) {
 	  			ta.appendText(floor.getList().get(roomNum).getRoomDescription());
 	  			System.out.println("Direction activataed");
+	  			isDirection = false;
+	  			
 	  		} else {
 	  			//observe
 	  			//map
