@@ -46,6 +46,9 @@ public class GameGui extends Application implements Runnable
 	//Creates a question bank for the game
 	QuestionBank bank = new QuestionBank();
 	
+	//Score for the player.
+	int score = 0;
+	
 	//Creates a multiple booleans so the buttons know what they need to display
 	boolean isQuestion = false;
 	boolean isDirection = false;
@@ -228,14 +231,10 @@ public class GameGui extends Application implements Runnable
 	  		if (!b5Text.equalsIgnoreCase("inventory")) {
 	  		  inventoryAction(1);
 	  		} else if (isQuestion == true) {
+	  			answerAction(1);
 	  			isQuestion = false;
-	  			System.out.println("Question deactivataed");
-	  			b1Text = bank.getList()[questionNum].getAns1();
 	  			questionNum++;
-	  		  ta.appendText(b1Clicked + "\n");
-	  		  b1.setText(b1Text);
-	  		  
-	  		  
+	  			defaultAction();
 	  		} else if (isPuzzle == true) {
 	  			isPuzzle = false;
 	  		} else if (isAnswering == true) {
@@ -244,15 +243,15 @@ public class GameGui extends Application implements Runnable
 	  			isMap = false;
 	  		} else if (isDirection == true) {
 	  			ta.appendText(floor.getList().get(roomNum).getRoomDescription());
-	  			System.out.println("Direction activataed");
+	  			System.out.println("Direction activated");
 	  			isDirection = false;
-	  			
 	  		} else {
 	  			//observe
 	  			//map
 	  			//whatever else you can do in a room
 	  			isQuestion = true;
-	  			System.out.println("Question activataed");
+	  			System.out.println("Question activated");
+	  			questionAction();
 	  		}
 	  	}
 	  }
@@ -268,11 +267,30 @@ public class GameGui extends Application implements Runnable
 	  	public void handle(ActionEvent e)
 	  	{
 	  		if (!b5Text.equalsIgnoreCase("inventory")) {
-		  	  inventoryAction(2);
-		  	} else {
-		  	  ta.appendText(b2Clicked);
-		  	  b2.setText(b2Text);
-		  	}
+		  		  inventoryAction(2);
+		  		} else if (isQuestion == true) {
+		  			answerAction(2);
+		  			isQuestion = false;
+		  			questionNum++;
+		  			defaultAction();
+		  		} else if (isPuzzle == true) {
+		  			isPuzzle = false;
+		  		} else if (isAnswering == true) {
+		  			isAnswering = false;
+		  		} else if (isMap == true) {
+		  			isMap = false;
+		  		} else if (isDirection == true) {
+		  			ta.appendText(floor.getList().get(roomNum).getRoomDescription());
+		  			System.out.println("Direction activated");
+		  			isDirection = false;
+		  		} else {
+		  			//observe
+		  			//map
+		  			//whatever else you can do in a room
+		  			isQuestion = true;
+		  			System.out.println("Question activated");
+		  			questionAction();
+		  		}
 	  	}
 	  }
 	  
@@ -287,11 +305,30 @@ public class GameGui extends Application implements Runnable
 	  	public void handle(ActionEvent e)
 	  	{
 	  		if (!b5Text.equalsIgnoreCase("inventory")) {
-		  	  inventoryAction(3);
-		  	} else {
-		  		ta.appendText(b3Clicked);
-			  	  b3.setText(b3Text);
-		  	}
+		  		  inventoryAction(3);
+		  		} else if (isQuestion == true) {
+		  			answerAction(3);
+		  			isQuestion = false;
+		  			questionNum++;
+		  			defaultAction();
+		  		} else if (isPuzzle == true) {
+		  			isPuzzle = false;
+		  		} else if (isAnswering == true) {
+		  			isAnswering = false;
+		  		} else if (isMap == true) {
+		  			isMap = false;
+		  		} else if (isDirection == true) {
+		  			ta.appendText(floor.getList().get(roomNum).getRoomDescription());
+		  			System.out.println("Direction activated");
+		  			isDirection = false;
+		  		} else {
+		  			//observe
+		  			//map
+		  			//whatever else you can do in a room
+		  			isQuestion = true;
+		  			System.out.println("Question activated");
+		  			questionAction();
+		  		}
 	  	}
 	  }
 	  
@@ -306,12 +343,30 @@ public class GameGui extends Application implements Runnable
 	  	public void handle(ActionEvent e)
 	  	{
 	  		if (!b5Text.equalsIgnoreCase("inventory")) {
-		  	  inventoryAction(4);
-		  	} else {
-		  		
-		  		ta.appendText(b4Clicked);
-			  	  b4.setText(b4Text);
-		  	}
+		  		  inventoryAction(4);
+		  		} else if (isQuestion == true) {
+		  			answerAction(4);
+		  			isQuestion = false;
+		  			questionNum++;
+		  			defaultAction();
+		  		} else if (isPuzzle == true) {
+		  			isPuzzle = false;
+		  		} else if (isAnswering == true) {
+		  			isAnswering = false;
+		  		} else if (isMap == true) {
+		  			isMap = false;
+		  		} else if (isDirection == true) {
+		  			ta.appendText(floor.getList().get(roomNum).getRoomDescription());
+		  			System.out.println("Direction activated");
+		  			isDirection = false;
+		  		} else {
+		  			//observe
+		  			//map
+		  			//whatever else you can do in a room
+		  			isQuestion = true;
+		  			System.out.println("Question activated");
+		  			questionAction();
+		  		}
 	  	}
 	  }
 	  
@@ -395,7 +450,52 @@ public class GameGui extends Application implements Runnable
 	    ta.appendText(user.getInventory().get(buttonNumber - 1).getItemName() + "\n");
 	  }
 	}
-
+	
+	// Method to ask a question and change the buttons to the according answers.
+	public void questionAction() {
+	  ta.appendText(bank.getList()[questionNum].getQuery() + "\n");
+	  b1.setText(bank.getList()[questionNum].getAns1());
+	  b2.setText(bank.getList()[questionNum].getAns2());
+	  b3.setText(bank.getList()[questionNum].getAns3());
+	  b4.setText(bank.getList()[questionNum].getAns4());
+	}
+	
+	// Method to induct an action if a question is being asked.
+	public void answerAction(int buttonNumber) {
+	  int guess = 0;
+	  
+	  if (isQuestion) {
+		switch (buttonNumber) {
+		  case  1: guess = 1;
+		           break;
+		  case  2: guess = 2;
+		           break;
+		  case  3: guess = 3;
+		           break;
+		  case  4: guess = 4;
+		           break;
+		  default: break;
+		}
+		
+		ta.appendText(bank.isCorrectString(bank.getList()[questionNum], guess, user.getBonus()) + "\n");
+		
+		if (bank.isCorrect(bank.getList()[questionNum], guess, user.getBonus())) {
+		  score++;
+		  if (bank.usedHelp(bank.getList()[questionNum], guess, user.getBonus())) {
+			user.setBonus(user.getBonus() - 1);
+		  }
+		}
+	  }
+	}
+	
+	// Method to set the main buttons to their default statements.
+	public void defaultAction() {
+	  b1.setText(b1Text);
+	  b2.setText(b2Text);
+	  b3.setText(b3Text);
+	  b4.setText(b4Text);
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
