@@ -50,8 +50,18 @@ public class GameGui extends Application implements Runnable
 	boolean isQuestion = false;
 	boolean isDirection = false;
 	boolean isPuzzle = false;
+	boolean isAnswering = false;
 	
 	String next = "Need to make something that tells the buttons what they need to say";
+	
+	//Create the Floor
+	static FloorGenerator floor = new FloorGenerator();
+	
+	//Know which room you are in
+	int roomNum = 0;
+	
+	//question number which shows how many questions have been asked
+	int questionNum = 0;
 	
 	//Just change as you go
 	public String version = "0.5";
@@ -197,7 +207,9 @@ public class GameGui extends Application implements Runnable
 
 	public static void main(String[] args)
 	{		
-		
+		//Create the Floor
+		//FloorGenerator floor = new FloorGenerator();
+		floor.layout();
 		//Starts the gui
 		launch(args);
 	}
@@ -217,16 +229,22 @@ public class GameGui extends Application implements Runnable
 	  		} else if (isQuestion == true) {
 	  			isQuestion = false;
 	  			System.out.println("Question deactivataed");
-	  			b1Text = next;
+	  			b1Text = bank.getEasyList()[questionNum].getAns1();
 	  		  ta.appendText(b1Clicked);
 	  		  b1.setText(b1Text);
+	  		  isDirection = true;
 	  		  
-	  		  //b1Text = "";
 	  		} else if (isPuzzle == true) {
 	  			
-	  		} else if (isDirection == true) {
+	  		} else if (isAnswering == true) {
 	  			
+	  		} else if (isDirection == true) {
+	  			ta.appendText(floor.getList().get(roomNum).getRoomDescription());
+	  			System.out.println("Direction activataed");
 	  		} else {
+	  			//observe
+	  			//map
+	  			//whatever else you can do in a room
 	  			isQuestion = true;
 	  			System.out.println("Question activataed");
 	  		}

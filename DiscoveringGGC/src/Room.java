@@ -20,6 +20,10 @@ public class Room
 		return roomDes;
 	}
 	
+	public int getRoomID() {
+		return roomID;
+	}
+	
 	public boolean encounterTeacher(int chance, boolean hasMet) //chance to encounter the teacher and a method to check if you run into them
 	{
 		if( (chance >= random.nextInt(100) + 1) && hasMet == false) //if statement to roll your chance

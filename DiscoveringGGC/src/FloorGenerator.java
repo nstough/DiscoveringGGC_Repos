@@ -136,7 +136,11 @@ public class FloorGenerator
 //		{
 //			will create when the team connects the pieces of the project
 //		}
-		
+		public ArrayList<Room> getList() 
+		{
+			return list;
+			
+		}
 		
 
 		public void printList() //prints the location list for testing
