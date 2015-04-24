@@ -232,7 +232,7 @@ public class GameGui extends Application implements Runnable
 	  			b1Text = bank.getEasyList()[questionNum].getAns1();
 	  		  ta.appendText(b1Clicked);
 	  		  b1.setText(b1Text);
-	  		  isDirection = true;
+	  		  
 	  		  
 	  		} else if (isPuzzle == true) {
 	  			
