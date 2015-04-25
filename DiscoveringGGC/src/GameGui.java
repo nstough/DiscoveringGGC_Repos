@@ -15,6 +15,28 @@ import javafx.stage.Stage;
 
 // Logic so that the buttons say the appropriate action and do the appropriate action at all times
 // John was here
+
+/* To John:
+ *  Based on the names of the buttons, I created methods to be called that will adjust the text of each button
+ *  when they're preferred actions are set (i.e. hitting "Map" will display the player's current location and
+ *  the 4 buttons will change to where they can go). List of all the additions/changes are below:
+ *  
+ *  - Added a mapAction method to perform the action needed when the Map button is pressed (like I did with
+ *      the Talk button for questions).
+ *  - Remove your "buttonClicked" variables. They served no purpose anymore.
+ *  - Remove the "isPuzzle" and "isAnswering" variable. I see no purpose for either of them.
+ *  - Adjusted the questions such that the question is word-wrapped in the text area and the buttons are changed
+ *      to A, B, C, and D, rather than their proper text.
+ *  
+ *  What you need to do (at minimum):
+ *  
+ *  - Find a way to place 3 different items into random locations across the map (ID 1, 6, and 10)
+ *      ("Michael's Binder", "Bottle of Water", and "Carl's Phone"). All other items are retrieved from
+ *      the puzzles.
+ *  - Make an observe method (similar to my questionAction and mapAction) that will display the contents of a room.
+ *  - Adjust the "Talk" feature such that it can sometimes talk to other students instead of it always being a teacher.
+ */
+
 /**Class: GameGui
  * @author Nick Stough
  * @version 1.0
@@ -49,11 +71,12 @@ public class GameGui extends Application implements Runnable
 	//Score for the player.
 	int score = 0;
 	
+	// player's current location.
+	String location = "Current Location";
+	
 	//Creates a multiple booleans so the buttons know what they need to display
 	boolean isQuestion = false;
 	boolean isDirection = false;
-	boolean isPuzzle = false;
-	boolean isAnswering = false;
 	boolean isMap = false;
 	
 	String next = "Need to make something that tells the buttons what they need to say";
@@ -72,16 +95,9 @@ public class GameGui extends Application implements Runnable
 	
 	//The text that is displayed on the buttons
 	public String b1Text = "Observe";
-	public String b2Text = "Investigate";
+	public String b2Text = "Interact";
 	public String b3Text = "Talk";
 	public String b4Text = "Map";
-	
-	//The text that will be displayed after the button is clicked
-	private String b1Clicked = "You clicked button 1";
-	private String b2Clicked = "";
-	private String b3Clicked = "";
-	private String b4Clicked = "";
-	
 	
 	//Text displayed on the right hand buttons
 	public String b5Text = "Inventory";
@@ -102,7 +118,7 @@ public class GameGui extends Application implements Runnable
 	Button b6 = new Button();
 	
 	//TextArea
-	TextArea ta = new TextArea();
+	static TextArea ta = new TextArea();
 	
 
 	/**
@@ -231,24 +247,21 @@ public class GameGui extends Application implements Runnable
 	  		if (!b5Text.equalsIgnoreCase("inventory")) {
 	  		  inventoryAction(1);
 	  		} else if (isQuestion == true) {
-	  			answerAction(1);
-	  			isQuestion = false;
-	  			questionNum++;
-	  			defaultAction();
-	  		} else if (isPuzzle == true) {
-	  			isPuzzle = false;
-	  		} else if (isAnswering == true) {
-	  			isAnswering = false;
+	  		  answerAction(1);
+	  		  isQuestion = false;
+	  		  questionNum++;
+	  		  defaultAction();
 	  		} else if (isMap == true) {
-	  			isMap = false;
+	  		  isMap = false;
+	  		  location = "A Building";
+	  		  defaultAction();
 	  		} else if (isDirection == true) {
-	  			ta.appendText(floor.getList().get(roomNum).getRoomDescription());
-	  			System.out.println("Direction activated");
-	  			isDirection = false;
+	  		  ta.appendText(floor.getList().get(roomNum).getRoomDescription());
+	  		  System.out.println("Direction activated");
+	  		  isDirection = false;
+	  		  defaultAction();
 	  		} else {
-	  			//observe
-	  			//map
-	  			//whatever else you can do in a room
+	  			// looks around the room and prints out what is in the room (i.e. sees a teacher or an item)
 	  		}
 	  	}
 	  }
@@ -270,20 +283,17 @@ public class GameGui extends Application implements Runnable
 		  			isQuestion = false;
 		  			questionNum++;
 		  			defaultAction();
-		  		} else if (isPuzzle == true) {
-		  			isPuzzle = false;
-		  		} else if (isAnswering == true) {
-		  			isAnswering = false;
 		  		} else if (isMap == true) {
 		  			isMap = false;
+		  			location = "B Building";
+		  			defaultAction();
 		  		} else if (isDirection == true) {
 		  			ta.appendText(floor.getList().get(roomNum).getRoomDescription());
 		  			System.out.println("Direction activated");
 		  			isDirection = false;
+		  			defaultAction();
 		  		} else {
-		  			//observe
-		  			//map
-		  			//whatever else you can do in a room
+		  			// interact with potential items in the room
 		  		}
 	  	}
 	  }
@@ -305,20 +315,17 @@ public class GameGui extends Application implements Runnable
 		  			isQuestion = false;
 		  			questionNum++;
 		  			defaultAction();
-		  		} else if (isPuzzle == true) {
-		  			isPuzzle = false;
-		  		} else if (isAnswering == true) {
-		  			isAnswering = false;
 		  		} else if (isMap == true) {
 		  			isMap = false;
+		  			location = "C Building";
+		  			defaultAction();
 		  		} else if (isDirection == true) {
 		  			ta.appendText(floor.getList().get(roomNum).getRoomDescription());
 		  			System.out.println("Direction activated");
 		  			isDirection = false;
+		  			defaultAction();
 		  		} else {
-		  			//observe
-		  			//map
-		  			//whatever else you can do in a room
+		  			// if someone is in the room, talks to the person
 		  			isQuestion = true;
 		  			System.out.println("Question activated");
 		  			questionAction();
@@ -343,20 +350,19 @@ public class GameGui extends Application implements Runnable
 		  			isQuestion = false;
 		  			questionNum++;
 		  			defaultAction();
-		  		} else if (isPuzzle == true) {
-		  			isPuzzle = false;
-		  		} else if (isAnswering == true) {
-		  			isAnswering = false;
 		  		} else if (isMap == true) {
 		  			isMap = false;
+		  			location = "D Building";
+		  			defaultAction();
 		  		} else if (isDirection == true) {
 		  			ta.appendText(floor.getList().get(roomNum).getRoomDescription());
 		  			System.out.println("Direction activated");
 		  			isDirection = false;
+		  			defaultAction();
 		  		} else {
-		  			//observe
-		  			//map
-		  			//whatever else you can do in a room
+		  			// open the map and travel to different parts of the campus
+		  			isMap = true;
+		  			mapAction();
 		  		}
 	  	}
 	  }
@@ -444,11 +450,27 @@ public class GameGui extends Application implements Runnable
 	
 	// Method to ask a question and change the buttons to the according answers.
 	public void questionAction() {
-	  ta.appendText(bank.getList()[questionNum].getQuery() + "\n");
-	  b1.setText(bank.getList()[questionNum].getAns1());
-	  b2.setText(bank.getList()[questionNum].getAns2());
-	  b3.setText(bank.getList()[questionNum].getAns3());
-	  b4.setText(bank.getList()[questionNum].getAns4());
+	  String temp = bank.getList()[questionNum].getQuery();
+	  int index = 0;
+	  
+	  while (temp.length() > 0) {
+		if (temp.length() < 80) {
+		  ta.appendText(temp + "\n");
+		  temp = "";
+		} else {
+		  index = temp.lastIndexOf(" ", 80);
+		  ta.appendText(temp.substring(0, index) + "\n");
+		  temp = temp.substring(index + 1);
+		}
+	  }
+	  
+	  ta.appendText("A) " + bank.getList()[questionNum].getAns1() + "\nB) " +
+	          bank.getList()[questionNum].getAns2() + "\nC) " + bank.getList()[questionNum].getAns3() +
+			  "\nD) " + bank.getList()[questionNum].getAns4() + "\n");
+	  b1.setText("A");
+	  b2.setText("B");
+	  b3.setText("C");
+	  b4.setText("D");
 	}
 	
 	// Method to induct an action if a question is being asked.
@@ -477,6 +499,16 @@ public class GameGui extends Application implements Runnable
 		  }
 		}
 	  }
+	}
+	
+	// Method to induct an action of the map is being used.
+	public void mapAction() {
+	  
+	  ta.appendText(location + "\n");
+	  b1.setText("A Building");
+	  b2.setText("B Building");
+	  b3.setText("C Building");
+	  b4.setText("D Building");
 	}
 	
 	// Method to set the main buttons to their default statements.

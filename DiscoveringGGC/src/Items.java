@@ -85,9 +85,7 @@ public class Items {
 	           break;
 	  case 9:  name = "Pack of Gum";
 	           break;
-	  case 10: name = "One Dollar";
-	           break;
-	  case 11: name = "Carl's Phone";
+	  case 10: name = "Carl's Phone";
 	           break;
 	  default: name = "==EMPTY==";
 	           break;
