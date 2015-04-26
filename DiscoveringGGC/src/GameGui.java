@@ -16,26 +16,24 @@ import javafx.stage.Stage;
 // Logic so that the buttons say the appropriate action and do the appropriate action at all times
 // John was here
 
-/* To John:
- *  Based on the names of the buttons, I created methods to be called that will adjust the text of each button
- *  when they're preferred actions are set (i.e. hitting "Map" will display the player's current location and
- *  the 4 buttons will change to where they can go). List of all the additions/changes are below:
- *  
- *  - Added a mapAction method to perform the action needed when the Map button is pressed (like I did with
- *      the Talk button for questions).
- *  - Remove your "buttonClicked" variables. They served no purpose anymore.
- *  - Remove the "isPuzzle" and "isAnswering" variable. I see no purpose for either of them.
- *  - Adjusted the questions such that the question is word-wrapped in the text area and the buttons are changed
- *      to A, B, C, and D, rather than their proper text.
- *  
- *  What you need to do (at minimum):
- *  
- *  - Find a way to place 3 different items into random locations across the map (ID 1, 6, and 10)
- *      ("Michael's Binder", "Bottle of Water", and "Carl's Phone"). All other items are retrieved from
- *      the puzzles.
- *  - Make an observe method (similar to my questionAction and mapAction) that will display the contents of a room.
- *  - Adjust the "Talk" feature such that it can sometimes talk to other students instead of it always being a teacher.
+/* To Tim
+ * Teachers that have rewards(and their reward ID in here): 
+ * Cynthia Johnson (1)
+ * Tom Mundie (6)
+ * Rolando Marquez (10)
+ * 
+ * Changed map and how it functions with my floors and rooms. Everything here should be working fine
+ * Created but did not finish interactAction. It has to do with your puzzles which i am not familiar with
+ * You need to finish the inventory system. they currently only say EMPTY
+ * Currently talk just asks a question - needs to check for teacher or puzzle and take the appropriate action.
+ * I'm gong to give you control of who is in each room. Feel free to edit any of my classes so that you have complete control with who you
+ * want where so that their is only a teacher or puzzle in each room. check the TeacherGenerator class for the list of teachers
+ * have a counter for number of correct answers
+ * 
+ * Don't Forget - I think we need to turn in an executable. I may be wrong but should be easy to make.
+ * 
  */
+
 
 /**Class: GameGui
  * @author Nick Stough
@@ -72,7 +70,7 @@ public class GameGui extends Application implements Runnable
 	int score = 0;
 	
 	// player's current location.
-	String location = "Current Location";
+	String location = "The Administration Building";
 	
 	//Creates a multiple booleans so the buttons know what they need to display
 	boolean isQuestion = false;
@@ -83,6 +81,8 @@ public class GameGui extends Application implements Runnable
 	
 	//Create the Floor
 	static FloorGenerator floor = new FloorGenerator();
+	
+	static TeacherGenerator teachs = new TeacherGenerator();
 	
 	//Know which room you are in
 	int roomNum = 0;
@@ -230,9 +230,11 @@ public class GameGui extends Application implements Runnable
 		//Create the Floor
 		//FloorGenerator floor = new FloorGenerator();
 		floor.layout();
+		teachs.createTeacherList();
 		//Starts the gui
 		launch(args);
 	}
+	
 	
 	/**
 	 * 
@@ -253,15 +255,18 @@ public class GameGui extends Application implements Runnable
 	  		  defaultAction();
 	  		} else if (isMap == true) {
 	  		  isMap = false;
-	  		  location = "A Building";
+	  		  isDirection = true;
+	  		  location = floor.getList().get(roomNum).getRoomName();
+	  		  
 	  		  defaultAction();
 	  		} else if (isDirection == true) {
-	  		  ta.appendText(floor.getList().get(roomNum).getRoomDescription());
-	  		  System.out.println("Direction activated");
+	  			roomNum = roomNum + 1;
 	  		  isDirection = false;
-	  		  defaultAction();
+	  		  observeAction();
 	  		} else {
 	  			// looks around the room and prints out what is in the room (i.e. sees a teacher or an item)
+	  			observeAction();
+	  			System.out.println(roomNum);
 	  		}
 	  	}
 	  }
@@ -285,15 +290,16 @@ public class GameGui extends Application implements Runnable
 		  			defaultAction();
 		  		} else if (isMap == true) {
 		  			isMap = false;
-		  			location = "B Building";
+		  			isDirection = true;
+		  			location = floor.getList().get(roomNum).getRoomName();
 		  			defaultAction();
 		  		} else if (isDirection == true) {
-		  			ta.appendText(floor.getList().get(roomNum).getRoomDescription());
-		  			System.out.println("Direction activated");
+		  			roomNum = roomNum + 2;
 		  			isDirection = false;
-		  			defaultAction();
+		  			interactAction();
 		  		} else {
 		  			// interact with potential items in the room
+		  			interactAction();
 		  		}
 	  	}
 	  }
@@ -315,15 +321,10 @@ public class GameGui extends Application implements Runnable
 		  			isQuestion = false;
 		  			questionNum++;
 		  			defaultAction();
-		  		} else if (isMap == true) {
-		  			isMap = false;
-		  			location = "C Building";
-		  			defaultAction();
+		  		}	else if (isMap == true) {
+		  			
 		  		} else if (isDirection == true) {
-		  			ta.appendText(floor.getList().get(roomNum).getRoomDescription());
-		  			System.out.println("Direction activated");
-		  			isDirection = false;
-		  			defaultAction();
+		  			
 		  		} else {
 		  			// if someone is in the room, talks to the person
 		  			isQuestion = true;
@@ -350,13 +351,10 @@ public class GameGui extends Application implements Runnable
 		  			isQuestion = false;
 		  			questionNum++;
 		  			defaultAction();
-		  		} else if (isMap == true) {
+		  		} else if (isMap == true) {  
 		  			isMap = false;
-		  			location = "D Building";
 		  			defaultAction();
 		  		} else if (isDirection == true) {
-		  			ta.appendText(floor.getList().get(roomNum).getRoomDescription());
-		  			System.out.println("Direction activated");
 		  			isDirection = false;
 		  			defaultAction();
 		  		} else {
@@ -503,12 +501,35 @@ public class GameGui extends Application implements Runnable
 	
 	// Method to induct an action of the map is being used.
 	public void mapAction() {
-	  
-	  ta.appendText(location + "\n");
-	  b1.setText("A Building");
-	  b2.setText("B Building");
-	  b3.setText("C Building");
-	  b4.setText("D Building");
+	  if (roomNum <= 12) {
+	  ta.appendText("You are currently at "+ location + "\n");
+	  b1.setText(floor.getList().get(roomNum+1).getRoomName());
+	  b2.setText(floor.getList().get(roomNum+2).getRoomName());
+	  b3.setText("");
+	  b4.setText("Back");
+	  }
+	}
+	
+	
+	public void observeAction() {
+		  String temp = floor.getList().get(roomNum).getRoomDescription();
+		  int index = 0;
+		  
+		  while (temp.length() > 0) {
+			if (temp.length() < 80) {
+			  ta.appendText(temp + "\n");
+			  temp = "";
+			} else {
+			  index = temp.lastIndexOf(" ", 80);
+			  ta.appendText(temp.substring(0, index) + "\n");
+			  temp = temp.substring(index + 1);
+			}
+		  }
+	}
+	
+	//Method that interacts with Puzzles
+	public void interactAction() {
+		//Tim to do here
 	}
 	
 	// Method to set the main buttons to their default statements.

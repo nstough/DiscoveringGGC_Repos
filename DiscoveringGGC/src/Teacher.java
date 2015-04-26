@@ -6,10 +6,15 @@
 public class Teacher
 {
 	String teacherName; // this is the teachers name
-	int teacherID; //this is an identifier for the teacher
-	int spawnChance; //This is the percent chance that you will encounter this teacher
-	int[] questionIDBank; //this is an array of possible questions that the teacher may ask 
+	int teacherID; //this is an identifier for the teacher 
 	int reward; //This is the ItemID if the teacher gives a reward to the player
+	String teacherDialogue = "";
+	
+	public Teacher(String name, int ID) {
+		teacherName = name;
+		teacherID = ID;
+	
+	}
 	
 	public void setTeacherName(String name) //A method to set the teachers name
 	{
@@ -21,15 +26,6 @@ public class Teacher
 		teacherID = ID;
 	}
 	
-	public void setSpawnChance(int chance) // a method to set the encounter chance of the teacher
-	{
-		spawnChance = chance;
-	}
-	
-	public void setQuestionBank(int[] questionlist) //A method which sets the question back that the teacher can use
-	{
-		questionIDBank = questionlist;
-	}
 	
 	public String getTeacherName() //A method to get the teachers name
 	{
@@ -41,29 +37,23 @@ public class Teacher
 		return teacherID;
 	}
 	
-	public int getSpawnChance() // a method to get the encounter chance of the teacher
-	{
-		return spawnChance;
-	}
 	
-	public String getQuestionBank() //A method which gets the question back that the teacher can use
-	{
-		String temp = "";
-		for(int i = 0; i<questionIDBank.length;i++)
-		{
-			temp = temp + questionIDBank[i] + " " ;
-		}
-		return temp;
-	}
-	
-	public void setItemID (int item) // sets the reward to an item
+	public void setReward (int item) // sets the reward to an item
 	{
 		reward = item;
 	}
 	
-	public int getItemID () // gets the item ID
+	public int getReward () // gets the item ID
 	{
 		return reward;
 	}
 	
+	public void setDialogue(String s) //Teachers text when spoken to
+	{
+		teacherDialogue = s;
+	}
+	
+	public String getDialogue() {
+		return teacherDialogue;
+	}
 }
