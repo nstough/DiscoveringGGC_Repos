@@ -6,7 +6,6 @@
  */
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class PuzzleEvents extends Player{
   static ArrayList<Puzzles> events = new ArrayList<Puzzles>();
@@ -14,23 +13,8 @@ public class PuzzleEvents extends Player{
   
   // Base constructor to populate the possible events list with generic IDs.
   public PuzzleEvents() {
-    Random rand = new Random();
-	
 	for (int i = 0; i < EVENT_SIZE; i++) {
-      events.add(new Puzzles((i + 1), "A Building"));
-      
-      // Switch-Statement that uses a random integer generator to set random locations to
-      // each puzzle.
-      switch(rand.nextInt(3)) {
-        case 0:  events.get(i).setPuzzleLocation("A Building");
-                 break;
-        case 1:  events.get(i).setPuzzleLocation("B Building");
-                 break;
-        case 2:  events.get(i).setPuzzleLocation("C Building");
-                 break;
-        default: events.get(i).setPuzzleLocation("B Building");
-                 break;
-      }
+      events.add(new Puzzles((i + 1)));
     }
   }
   

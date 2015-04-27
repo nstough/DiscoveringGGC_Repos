@@ -11,10 +11,12 @@ public class Room
 	String roomDes; //This is the description of the room. The player will read it when he/she enters the room
 	String roomName; // Names the room
 	int roomID; //This is the room id so that we know which room the player is in.
-	int[] puzzles; //This is a list of possible puzzles in this room
-	int[] teachers; // this is a list of possible teachers
+	int puzzle = -1; //ID of the puzzle that is located in the room.
+	int teacher = -1; //ID of the teacher that is located in the room.
 	int[] adjacentRooms; //This is an array of rooms that the player may enter from this room
 	Random random = new Random();
+	boolean hasEntered = false; //value of whether the room has been entered
+	boolean hasCleared = false; //value of whether the room has been cleared
 	
 	public String getRoomDescription() //method allowing the room description to be given to the player
 	{
@@ -28,32 +30,6 @@ public class Room
 	public int getRoomID() {
 		return roomID;
 	}
-	
-	public boolean encounterTeacher(int chance, boolean hasMet) //chance to encounter the teacher and a method to check if you run into them
-	{
-		if( (chance >= random.nextInt(100) + 1) && hasMet == false) //if statement to roll your chance
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-		
-	}
-	
-	public boolean encounterPuzzle(int chance, boolean hasFound) //chance to encounter a puzzle if you did not encounter a teacher
-	{
-		if( (chance >= random.nextInt(100) + 1) && hasFound == false) //if statement to roll your chance
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
 
 	public Room(int ID,String des,int[] nextRooms,String name) //Room generator. not much else to say
 	{
@@ -68,15 +44,32 @@ public class Room
 	{
 	return (roomDes + "\n" + roomID);
 	}
-
-	public void setPuzzles(int[] puzzlelist) //need team members piece to flesh out
-	{
-	puzzles = puzzlelist;
+	
+	public void setPuzzle(int id) {
+	  if (teacher == -1 && !hasEntered) {
+		puzzle = id;
+	  }
 	}
-
-	public void setTeachers(int[] teacherlist) //Method to set the possible teachers
-	{
-	teachers = teacherlist;
+	
+	public void setTeacher(int id) {
+	  if (puzzle == -1 && !hasEntered) {
+		teacher = id;
+	  }
 	}
-
+	
+	public void setHasEntered(boolean entered) {
+		hasEntered = entered;
+	}
+	
+	public void setHasCleared(boolean cleared) {
+		hasCleared = cleared;
+	}
+	
+	public boolean getHasEntered() {
+		return hasEntered;
+	}
+	
+	public boolean getHasCleared() {
+		return hasCleared;
+	}
 }

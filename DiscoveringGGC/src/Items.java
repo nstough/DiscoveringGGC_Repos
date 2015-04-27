@@ -46,7 +46,7 @@ public class Items {
 	           break;
 	  case  9: questID = 9;
 	           break;
-	  case 11: questID = 10;
+	  case 10: questID = 10;
 	           break;
 	  default: break;
 	}

@@ -13,27 +13,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-// Logic so that the buttons say the appropriate action and do the appropriate action at all times
+import java.util.Random;
+
 // John was here
-
-/* To Tim
- * Teachers that have rewards(and their reward ID in here): 
- * Cynthia Johnson (1)
- * Tom Mundie (6)
- * Rolando Marquez (10)
- * 
- * Changed map and how it functions with my floors and rooms. Everything here should be working fine
- * Created but did not finish interactAction. It has to do with your puzzles which i am not familiar with
- * You need to finish the inventory system. they currently only say EMPTY
- * Currently talk just asks a question - needs to check for teacher or puzzle and take the appropriate action.
- * I'm gong to give you control of who is in each room. Feel free to edit any of my classes so that you have complete control with who you
- * want where so that their is only a teacher or puzzle in each room. check the TeacherGenerator class for the list of teachers
- * have a counter for number of correct answers
- * 
- * Don't Forget - I think we need to turn in an executable. I may be wrong but should be easy to make.
- * 
- */
-
 
 /**Class: GameGui
  * @author Nick Stough
@@ -66,6 +48,9 @@ public class GameGui extends Application implements Runnable
 	//Creates a question bank for the game
 	QuestionBank bank = new QuestionBank();
 	
+	//Instance of PuzzleEvents
+	PuzzleEvents quests = new PuzzleEvents();
+	
 	//Score for the player.
 	int score = 0;
 	
@@ -76,8 +61,6 @@ public class GameGui extends Application implements Runnable
 	boolean isQuestion = false;
 	boolean isDirection = false;
 	boolean isMap = false;
-	
-	String next = "Need to make something that tells the buttons what they need to say";
 	
 	//Create the Floor
 	static FloorGenerator floor = new FloorGenerator();
@@ -90,14 +73,17 @@ public class GameGui extends Application implements Runnable
 	//question number which shows how many questions have been asked
 	int questionNum = 0;
 	
+	//teacher number which shows the number of teachers that have been used
+	int teacherNum = 0;
+	
 	//Just change as you go
 	public String version = "0.5";
 	
 	//The text that is displayed on the buttons
 	public String b1Text = "Observe";
-	public String b2Text = "Interact";
-	public String b3Text = "Talk";
-	public String b4Text = "Map";
+	public String b2Text = "Talk";
+	public String b3Text = "Map";
+	public String b4Text = "Status";
 	
 	//Text displayed on the right hand buttons
 	public String b5Text = "Inventory";
@@ -246,7 +232,7 @@ public class GameGui extends Application implements Runnable
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		if (!b5Text.equalsIgnoreCase("inventory")) {
+	  		if (!b5.getText().equalsIgnoreCase("inventory")) {
 	  		  inventoryAction(1);
 	  		} else if (isQuestion == true) {
 	  		  answerAction(1);
@@ -256,15 +242,14 @@ public class GameGui extends Application implements Runnable
 	  		} else if (isMap == true) {
 	  		  isMap = false;
 	  		  isDirection = true;
-	  		  location = floor.getList().get(roomNum).getRoomName();
-	  		  
-	  		  defaultAction();
+	  		  location = b1.getText();
 	  		} else if (isDirection == true) {
-	  			roomNum = roomNum + 1;
+	  		  roomNum = roomNum + 1;
 	  		  isDirection = false;
 	  		  observeAction();
+	  		  defaultAction();
 	  		} else {
-	  			// looks around the room and prints out what is in the room (i.e. sees a teacher or an item)
+	  			// looks around the room and prints out what is in the room (i.e. sees a teacher or student)
 	  			observeAction();
 	  			System.out.println(roomNum);
 	  		}
@@ -281,7 +266,7 @@ public class GameGui extends Application implements Runnable
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		if (!b5Text.equalsIgnoreCase("inventory")) {
+	  		if (!b5.getText().equalsIgnoreCase("inventory")) {
 		  		  inventoryAction(2);
 		  		} else if (isQuestion == true) {
 		  			answerAction(2);
@@ -291,15 +276,49 @@ public class GameGui extends Application implements Runnable
 		  		} else if (isMap == true) {
 		  			isMap = false;
 		  			isDirection = true;
-		  			location = floor.getList().get(roomNum).getRoomName();
-		  			defaultAction();
+		  			location = b2.getText();
 		  		} else if (isDirection == true) {
 		  			roomNum = roomNum + 2;
 		  			isDirection = false;
-		  			interactAction();
+		  			observeAction();
+		  			defaultAction();
 		  		} else {
-		  			// interact with potential items in the room
-		  			interactAction();
+		  		    // if someone is in the room, talks to the person
+		  			if (floor.getList().get(roomNum).getHasCleared()) {
+		  			  ta.appendText("Nobody is in this room.\n");
+		  			} else if (floor.getList().get(roomNum).puzzle != -1 && floor.getList().get(roomNum).teacher > -1) {
+		  			  switch (floor.getList().get(roomNum).puzzle) {
+		  			    case  0: quests.helpEvent01();
+		  			    		 break;
+		  			    case  1: quests.helpEvent02();
+ 			    		 		 break;
+		  			    case  2: quests.helpEvent03();
+ 			    		 		 break; 
+		  			    case  3: quests.helpEvent04();
+ 			    		 		 break;
+		  			    case  4: quests.helpEvent05();
+ 			    		 		 break;
+		  			    case  5: quests.helpEvent06();
+ 			    		 		 break;
+		  			    case  6: quests.helpEvent07();
+		  			    		 break;
+		  			    case  7: quests.helpEvent08();
+		  			    		 break;
+		  			    case  8: quests.helpEvent09();
+		  			    		 break;
+		  			    case  9: quests.helpEvent10();
+ 			    				 break;
+		  		        default: break;
+		  			  }
+		  			} else if (floor.getList().get(roomNum).teacher != -1 && floor.getList().get(roomNum).puzzle == -1) {
+		  			  isQuestion = true;
+		  			  System.out.println("Question activated");
+		  			  ta.appendText(teachs.getList().get(roomNum).getTeacherName() + ": " +
+		  			          teachs.getList().get(roomNum).getDialogue() + "\n");
+		  			  questionAction();
+		  			} else {
+		  			  ta.appendText("You do not know who is in this room.\n");
+		  			}
 		  		}
 	  	}
 	  }
@@ -314,7 +333,7 @@ public class GameGui extends Application implements Runnable
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		if (!b5Text.equalsIgnoreCase("inventory")) {
+	  		if (!b5.getText().equalsIgnoreCase("inventory")) {
 		  		  inventoryAction(3);
 		  		} else if (isQuestion == true) {
 		  			answerAction(3);
@@ -322,14 +341,18 @@ public class GameGui extends Application implements Runnable
 		  			questionNum++;
 		  			defaultAction();
 		  		}	else if (isMap == true) {
-		  			
+		  			isMap = false;
+		  			isDirection = true;
+		  			location = floor.getList().get(roomNum).getRoomName();
 		  		} else if (isDirection == true) {
-		  			
+		  			isDirection = false;
+		  			roomNum = 0;
+		  			observeAction();
+		  			defaultAction();
 		  		} else {
-		  			// if someone is in the room, talks to the person
-		  			isQuestion = true;
-		  			System.out.println("Question activated");
-		  			questionAction();
+		  			// open the map and travel to different parts of the campus
+		  			isDirection = true;
+		  			mapAction();
 		  		}
 	  	}
 	  }
@@ -344,7 +367,7 @@ public class GameGui extends Application implements Runnable
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		if (!b5Text.equalsIgnoreCase("inventory")) {
+	  		if (!b5.getText().equalsIgnoreCase("inventory")) {
 		  		  inventoryAction(4);
 		  		} else if (isQuestion == true) {
 		  			answerAction(4);
@@ -353,14 +376,14 @@ public class GameGui extends Application implements Runnable
 		  			defaultAction();
 		  		} else if (isMap == true) {  
 		  			isMap = false;
-		  			defaultAction();
+		  			isDirection = true;
+		  			location = floor.getList().get(roomNum).getRoomName();
 		  		} else if (isDirection == true) {
 		  			isDirection = false;
 		  			defaultAction();
 		  		} else {
-		  			// open the map and travel to different parts of the campus
-		  			isMap = true;
-		  			mapAction();
+		  		  // displays the player's current score and the likes
+		  		  statusAction();
 		  		}
 	  	}
 	  }
@@ -375,25 +398,15 @@ public class GameGui extends Application implements Runnable
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		if(b5Text.equalsIgnoreCase("inventory")){
-	  			b5Text = "Back";
-	  			
+	  		if(b5.getText().equalsIgnoreCase("inventory")){
 	  			b1.setText(user.getInventory().get(0).getItemName());
 	  			b2.setText(user.getInventory().get(1).getItemName());
 	  			b3.setText(user.getInventory().get(2).getItemName());
 	  			b4.setText(user.getInventory().get(3).getItemName());
-	  			b5.setText(b5Text);
-	  			b6.setText(b6Text);
+	  			b5.setText("Back");
 	  		}
-	  		else if(b5Text.equalsIgnoreCase("back")){
-	  			b5Text = "Inventory";
-	 			
-	  			b1.setText(b1Text);
-	  			b2.setText(b2Text);
-	  			b3.setText(b3Text);
-	  			b4.setText(b4Text);
-	  			b5.setText(b5Text);
-	  			b6.setText(b6Text);
+	  		else {
+	  			defaultAction();
 	  		}
 	  	}
 	  }
@@ -403,10 +416,10 @@ public class GameGui extends Application implements Runnable
 	 */
 	public void inventoryAction(int buttonNumber) {
 	  boolean act = false;
-	  boolean[] questActive = new boolean[PuzzleEvents.EVENT_SIZE];
+	  boolean[] questActive = new boolean[quests.EVENT_SIZE];
 	  
-	  for (int i = 0; i < PuzzleEvents.events.size(); i++) {
-		if (PuzzleEvents.events.get(i).getIsActive()) {
+	  for (int i = 0; i < quests.events.size(); i++) {
+		if (quests.events.get(i).getIsActive()) {
 		  questActive[i] = true;
 		} else {
 		  questActive[i] = false;
@@ -419,25 +432,25 @@ public class GameGui extends Application implements Runnable
 	  
 	  if (act) {
 		switch(user.getInventory().get(buttonNumber - 1).getQuestID()) {
-		  case  1: PuzzleEvents.endEvent01();
+		  case  1: quests.endEvent01();
 		           break;
-		  case  2: PuzzleEvents.endEvent02();
+		  case  2: quests.endEvent02();
 		           break;
-		  case  3: PuzzleEvents.endEvent03();
+		  case  3: quests.endEvent03();
 		           break;
-		  case  4: PuzzleEvents.endEvent04();
+		  case  4: quests.endEvent04();
 		           break;
-		  case  5: PuzzleEvents.endEvent05();
+		  case  5: quests.endEvent05();
 		           break;
-		  case  6: PuzzleEvents.endEvent06();
+		  case  6: quests.endEvent06();
 		           break;
-		  case  7: PuzzleEvents.endEvent07();
+		  case  7: quests.endEvent07();
 		           break;
-		  case  8: PuzzleEvents.endEvent08();
+		  case  8: quests.endEvent08();
 			       break;
-		  case  9: PuzzleEvents.endEvent09();
+		  case  9: quests.endEvent09();
 		           break;
-		  case 10: PuzzleEvents.endEvent10();
+		  case 10: quests.endEvent10();
 		           break;
 	      default: break;
 		}
@@ -448,27 +461,31 @@ public class GameGui extends Application implements Runnable
 	
 	// Method to ask a question and change the buttons to the according answers.
 	public void questionAction() {
-	  String temp = bank.getList()[questionNum].getQuery();
-	  int index = 0;
-	  
-	  while (temp.length() > 0) {
-		if (temp.length() < 80) {
-		  ta.appendText(temp + "\n");
-		  temp = "";
-		} else {
-		  index = temp.lastIndexOf(" ", 80);
-		  ta.appendText(temp.substring(0, index) + "\n");
-		  temp = temp.substring(index + 1);
-		}
+	  if (!floor.getList().get(roomNum).getHasCleared()) {
+		  String temp = bank.getList()[questionNum].getQuery();
+		  int index = 0;
+		  
+		  while (temp.length() > 0) {
+			if (temp.length() < 80) {
+			  ta.appendText(temp + "\n");
+			  temp = "";
+			} else {
+			  index = temp.lastIndexOf(" ", 80);
+			  ta.appendText(temp.substring(0, index) + "\n");
+			  temp = temp.substring(index + 1);
+			}
+		  }
+		  
+		  ta.appendText("A) " + bank.getList()[questionNum].getAns1() + "\nB) " +
+		          bank.getList()[questionNum].getAns2() + "\nC) " + bank.getList()[questionNum].getAns3() +
+				  "\nD) " + bank.getList()[questionNum].getAns4() + "\n");
+		  b1.setText("A");
+		  b2.setText("B");
+		  b3.setText("C");
+		  b4.setText("D");
+	  } else {
+		  ta.appendText("You have answered course already.");
 	  }
-	  
-	  ta.appendText("A) " + bank.getList()[questionNum].getAns1() + "\nB) " +
-	          bank.getList()[questionNum].getAns2() + "\nC) " + bank.getList()[questionNum].getAns3() +
-			  "\nD) " + bank.getList()[questionNum].getAns4() + "\n");
-	  b1.setText("A");
-	  b2.setText("B");
-	  b3.setText("C");
-	  b4.setText("D");
 	}
 	
 	// Method to induct an action if a question is being asked.
@@ -495,6 +512,13 @@ public class GameGui extends Application implements Runnable
 		  if (bank.usedHelp(bank.getList()[questionNum], guess, user.getBonus())) {
 			user.setBonus(user.getBonus() - 1);
 		  }
+		  if (!teachs.getList().get(roomNum).getRewarded() && teachs.getList().get(roomNum).getReward() > 0) {
+			ta.appendText(teachs.getList().get(roomNum).getTeacherName() +
+					": \"Here's a little something else for your good work.\n");
+			user.addItem(teachs.getList().get(roomNum).getReward());
+			teachs.getList().get(roomNum).setRewarded(true);
+			floor.getList().get(roomNum).setHasCleared(true);
+		  }
 		}
 	  }
 	}
@@ -502,34 +526,75 @@ public class GameGui extends Application implements Runnable
 	// Method to induct an action of the map is being used.
 	public void mapAction() {
 	  if (roomNum <= 12) {
-	  ta.appendText("You are currently at "+ location + "\n");
+	  ta.appendText("You are currently at "+ location + ".\n");
 	  b1.setText(floor.getList().get(roomNum+1).getRoomName());
 	  b2.setText(floor.getList().get(roomNum+2).getRoomName());
-	  b3.setText("");
+	  b3.setText(floor.getList().get(0).getRoomName());
 	  b4.setText("Back");
 	  }
 	}
 	
-	
+	// Method to induct an action when "Observe" is clicked.
 	public void observeAction() {
-		  String temp = floor.getList().get(roomNum).getRoomDescription();
-		  int index = 0;
-		  
-		  while (temp.length() > 0) {
-			if (temp.length() < 80) {
-			  ta.appendText(temp + "\n");
-			  temp = "";
-			} else {
-			  index = temp.lastIndexOf(" ", 80);
-			  ta.appendText(temp.substring(0, index) + "\n");
-			  temp = temp.substring(index + 1);
-			}
+	  String temp = floor.getList().get(roomNum).getRoomDescription();
+	  int index = 0;
+	  
+	  Random rand = new Random();
+	  
+	  while (temp.length() > 0) {
+		if (temp.length() < 80) {
+		  ta.appendText(temp + "\n");
+		  temp = "";
+		} else {
+		  index = temp.lastIndexOf(" ", 80);
+		  ta.appendText(temp.substring(0, index) + "\n");
+		  temp = temp.substring(index + 1);
+		}
+	  }
+	  
+	  if (floor.getList().get(roomNum).getHasCleared()) {
+		ta.appendText("There is nothing of interest in this room.\n");
+	  } else {
+		if (floor.getList().get(roomNum).getHasEntered() && !floor.getList().get(roomNum).getHasCleared()) {
+		  if (floor.getList().get(roomNum).puzzle == -1) {
+			ta.appendText("A teacher appears to be in this room.\n");
+		  } else {
+			ta.appendText("A student appears to be in this room.\n");
 		  }
+		} else if (!floor.getList().get(roomNum).getHasEntered()) {
+		  if (rand.nextInt(2) == 0 && rand.nextInt(100) > 49) {
+			while (floor.getList().get(roomNum).puzzle == -1) {
+			  int hold = rand.nextInt(10);
+			  if (!quests.events.get(hold).getIsActive() && !quests.events.get(hold).getIsCompleted() &&
+			    quests.events.get(hold).getIsAvailable()) {
+			    floor.getList().get(roomNum).puzzle = hold;
+			    quests.events.get(hold).setIsActive(true);
+			    quests.events.get(hold).setIsAvailable(false);
+			  }
+			}
+			ta.appendText("A student appears to be in this room.\n");
+		  } else if (rand.nextInt(100) > 49) {
+			while (floor.getList().get(roomNum).teacher == -1) {
+			  if (teachs.getList().get(teacherNum).room == -1) {
+				floor.getList().get(roomNum).teacher = teacherNum;
+				teachs.getList().get(teacherNum).room = roomNum;
+				teacherNum++;
+			  }
+			}
+		    ta.appendText("A teacher appears to be in this room.\n");
+		  }
+		} else {
+		  ta.appendText("There is nothing of interest in this room.\n");
+		  floor.getList().get(roomNum).setHasCleared(true);
+	    }
+	  }
 	}
 	
-	//Method that interacts with Puzzles
-	public void interactAction() {
-		//Tim to do here
+	//Method that displays the player's status
+	public void statusAction() {
+	  ta.appendText("Total Credits Earned: " + score + "\n");
+	  ta.appendText("Total Number of Bonus Credits: " + user.getBonus() + "\n");
+	  ta.appendText("\nPlayer's Current Location: " + location + "\n\n");
 	}
 	
 	// Method to set the main buttons to their default statements.
@@ -538,6 +603,8 @@ public class GameGui extends Application implements Runnable
 	  b2.setText(b2Text);
 	  b3.setText(b3Text);
 	  b4.setText(b4Text);
+	  b5.setText(b5Text);
+	  b6.setText(b6Text);
 	}
 	
 	/* (non-Javadoc)

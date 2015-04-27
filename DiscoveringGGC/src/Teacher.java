@@ -7,13 +7,14 @@ public class Teacher
 {
 	String teacherName; // this is the teachers name
 	int teacherID; //this is an identifier for the teacher 
-	int reward; //This is the ItemID if the teacher gives a reward to the player
+	int reward = 0; //This is the ItemID if the teacher gives a reward to the player
 	String teacherDialogue = "";
+	int room = -1; //ID location of the teacher
+	boolean rewarded = false;
 	
 	public Teacher(String name, int ID) {
 		teacherName = name;
 		teacherID = ID;
-	
 	}
 	
 	public void setTeacherName(String name) //A method to set the teachers name
@@ -25,7 +26,6 @@ public class Teacher
 	{
 		teacherID = ID;
 	}
-	
 	
 	public String getTeacherName() //A method to get the teachers name
 	{
@@ -55,5 +55,13 @@ public class Teacher
 	
 	public String getDialogue() {
 		return teacherDialogue;
+	}
+	
+	public void setRewarded(boolean r) {
+	    rewarded = r;
+	}
+	
+	public boolean getRewarded() {
+	    return rewarded;
 	}
 }

@@ -12,7 +12,7 @@ public class Question {
   private String ans3 = ""; // One of the answers for the question.
   private String ans4 = ""; // One of the answers for the question.
   private int correctAnswer = 5; // Value to indicate the correct answer.
-  private boolean used = false;
+  private boolean isUsed = false;
   
   // Base constructor to provide a blank question.
   public Question() {
@@ -54,9 +54,9 @@ public class Question {
 	this.correctAnswer = correctAnswer;
   }
   
-  // set-method to determine if the question is used.
-  public void setUsed(boolean used) {
-	this.used = used;
+  // Set-method to determine if the question is used.
+  public void setIsUsed(boolean isUsed) {
+	this.isUsed = isUsed;
   }
   
   // Get-method to retrieve the query.
@@ -89,8 +89,8 @@ public class Question {
 	return correctAnswer;
   }
   
-  // Get-method to retrieve if the question is usable.
-  public boolean getUsed() {
-	return used;
+  // Get-method to know whether the question has been used.
+  public boolean getIsUsed() {
+	return isUsed;
   }
 }

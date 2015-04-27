@@ -70,14 +70,14 @@ public class Player {
 	  if (inventory.get(i).getID() == 0) {
 		inventory.get(i).setID(ID);
 		add = true;
-		System.out.println(inventory.get(i).getItemName() + " added to inventory.\n=====");
+		GameGui.ta.appendText(inventory.get(i).getItemName() + " added to inventory.\n=====\n");
 		break;
 	  }
 	}
 	
 	// Displays a message if whether the item is added or not.
 	if (!add) {
-	  System.out.println("Cannot add item to inventory. Inventory full.\n=====");
+	  GameGui.ta.appendText("Cannot add item to inventory. Inventory full.\n=====\n");
 	}
   }
   
@@ -85,7 +85,7 @@ public class Player {
   public static void removeItem(int index) {
 	inventory.get(index - 1).setID(0);
 	
-	System.out.println("Item has been disposed.\n=====");
+	GameGui.ta.appendText("Item has been disposed.\n=====\n");
   }
   
   // Method to display the player's inventory.
@@ -93,11 +93,11 @@ public class Player {
 	for (int i = 0; i < MAX_INVENTORY_SIZE; i++) {
 	  System.out.print("Slot " + (i + 1) + " - ");
 	  if (inventory.get(i).getID() > 0) {
-		System.out.println(inventory.get(i).getItemName());
+		GameGui.ta.appendText(inventory.get(i).getItemName() + "\n");
 	  } else {
-		System.out.println("==EMPTY==");
+		GameGui.ta.appendText("==EMPTY==\n");
 	  }
 	}
-	System.out.println("=====");
+	GameGui.ta.appendText("=====\n");
   }
 }
