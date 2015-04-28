@@ -137,7 +137,7 @@ public class QuestionBank {
 	list[16].setAns2("Europe");
 	list[16].setAns3("South America");
 	list[16].setAns4("Antarctica");
-	list[16].setCorrectAnswer(3);
+	list[16].setCorrectAnswer(2);
 	
 	list[17].setQuery("\"What is another term for \"meat eater\"?\"");
     list[17].setAns1("Herbivore");

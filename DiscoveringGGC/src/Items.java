@@ -18,11 +18,13 @@ public class Items {
   // Base constructor for a specific item.
   public Items(int itemID) {
 	this.itemID = itemID;
+	setQuestID();
   }
   
   // Set-Method to set an item's ID.
   public void setID(int itemID) {
 	this.itemID = itemID;
+	setQuestID();
   }
   
   // Set-Method to set an item's quest ID.

@@ -38,13 +38,13 @@ public class TeacherGenerator {
 		teachList.add(8,President);
 		CynthiaJohnson.setDialogue("Wants some extra credit? Answer me this:");
 		VictoriaJohnson.setDialogue("Think you have what it takes to graduate?");
-		CathyMoore.setDialogue("I CHALLENGE YOU WITH THIS QUESTION");
+		CathyMoore.setDialogue("I CHALLENGE YOU WITH THIS QUESTION!");
 		DianeWhite .setDialogue("Are you smarter than a fifth grader?");
 		AdolfoSantos.setDialogue("Want to be a millionare?");
-		TomMundie.setDialogue("Answer me this and i'll let you have something");
-		JustinJernigan.setDialogue("hgjfdhlkhsjfhfd?");
-		RolandoMarquez.setDialogue("You can have this if you answer my question correctly");
-		President.setDialogue("THIS ISN'T EVEN MY FINAL FORM");
+		TomMundie.setDialogue("Answer me this and I'll let you have something.");
+		JustinJernigan.setDialogue("Prepare yourself!");
+		RolandoMarquez.setDialogue("You can have this if you answer my question correctly.");
+		President.setDialogue("THIS ISN'T EVEN MY FINAL FORM!");
 	}
 	public ArrayList<Teacher> getList() 
 	{

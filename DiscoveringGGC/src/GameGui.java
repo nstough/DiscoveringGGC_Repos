@@ -43,7 +43,7 @@ public class GameGui extends Application implements Runnable
 	public Game myGame = new Game();
 	
 	//Instance of Player
-	private Player user = new Player();
+	static Player user = new Player();
 	
 	//Creates a question bank for the game
 	QuestionBank bank = new QuestionBank();
@@ -54,13 +54,10 @@ public class GameGui extends Application implements Runnable
 	//Score for the player.
 	int score = 0;
 	
-	// player's current location.
-	String location = "The Administration Building";
-	
 	//Creates a multiple booleans so the buttons know what they need to display
 	boolean isQuestion = false;
 	boolean isDirection = false;
-	boolean isMap = false;
+	boolean isEnd = false;
 	
 	//Create the Floor
 	static FloorGenerator floor = new FloorGenerator();
@@ -70,11 +67,14 @@ public class GameGui extends Application implements Runnable
 	//Know which room you are in
 	int roomNum = 0;
 	
-	//question number which shows how many questions have been asked
-	int questionNum = 0;
-	
-	//teacher number which shows the number of teachers that have been used
+	//current teacher in use
 	int teacherNum = 0;
+	
+	//current quesiton in use
+	int questionNum = 0;
+
+	// player's current location.
+	String location = floor.getList().get(roomNum).getRoomName();
 	
 	//Just change as you go
 	public String version = "0.5";
@@ -232,22 +232,23 @@ public class GameGui extends Application implements Runnable
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		if (!b5.getText().equalsIgnoreCase("inventory")) {
-	  		  inventoryAction(1);
-	  		} else if (isQuestion == true) {
-	  		  answerAction(1);
-	  		  isQuestion = false;
-	  		  questionNum++;
-	  		  defaultAction();
-	  		} else if (isMap == true) {
-	  		  isMap = false;
-	  		  isDirection = true;
-	  		  location = b1.getText();
-	  		} else if (isDirection == true) {
-	  		  roomNum = roomNum + 1;
-	  		  isDirection = false;
-	  		  observeAction();
-	  		  defaultAction();
+	  		if (b5.getText().equalsIgnoreCase("back")) {
+	  		    inventoryAction(1);
+	  		} else if (isQuestion) {
+		        defaultAction();
+	  		    answerAction(1);
+	  		    isQuestion = false;
+	  		} else if (isDirection) {
+	  		  if (roomNum < floor.getList().size() - 1) {
+	  			roomNum = roomNum + 1;
+		  		isDirection = false;
+		  		location = b1.getText();
+		  		ta.appendText("You have travelled to " + location + ".\n=====\n");
+		  		defaultAction();
+	  		  }
+	  		} else if (isEnd) {
+	  			endGame();
+	  			System.exit(0);
 	  		} else {
 	  			// looks around the room and prints out what is in the room (i.e. sees a teacher or student)
 	  			observeAction();
@@ -266,55 +267,65 @@ public class GameGui extends Application implements Runnable
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		if (!b5.getText().equalsIgnoreCase("inventory")) {
+	  		if (b5.getText().equalsIgnoreCase("back")) {
 		  		  inventoryAction(2);
-		  		} else if (isQuestion == true) {
+		  		} else if (isQuestion) {
+		  			defaultAction();
 		  			answerAction(2);
 		  			isQuestion = false;
-		  			questionNum++;
-		  			defaultAction();
-		  		} else if (isMap == true) {
-		  			isMap = false;
-		  			isDirection = true;
-		  			location = b2.getText();
-		  		} else if (isDirection == true) {
-		  			roomNum = roomNum + 2;
-		  			isDirection = false;
-		  			observeAction();
-		  			defaultAction();
+		  		} else if (isDirection) {
+		  			if (roomNum < floor.getList().size() - 2) {
+		  			  roomNum = roomNum + 2;
+			  		  isDirection = false;
+			  		  location = b2.getText();
+				  	  ta.appendText("You have travelled to " + location + ".\n=====\n");
+			  		  defaultAction();
+		  			}
+		  		} else if (isEnd) {
+		  			endGame();
+		  			System.exit(0);
 		  		} else {
 		  		    // if someone is in the room, talks to the person
 		  			if (floor.getList().get(roomNum).getHasCleared()) {
 		  			  ta.appendText("Nobody is in this room.\n");
-		  			} else if (floor.getList().get(roomNum).puzzle != -1 && floor.getList().get(roomNum).teacher > -1) {
+		  			} else if (floor.getList().get(roomNum).puzzle != -1) {
 		  			  switch (floor.getList().get(roomNum).puzzle) {
-		  			    case  0: quests.helpEvent01();
+		  			    case  1: quests.events.get(0).setIsAvailable(true);
+		  			    	     quests.helpEvent01();
 		  			    		 break;
-		  			    case  1: quests.helpEvent02();
+		  			    case  2: quests.events.get(1).setIsAvailable(true);
+		  			             quests.helpEvent02();
  			    		 		 break;
-		  			    case  2: quests.helpEvent03();
+		  			    case  3: quests.events.get(2).setIsAvailable(true);
+		  			             quests.helpEvent03();
  			    		 		 break; 
-		  			    case  3: quests.helpEvent04();
+		  			    case  4: quests.events.get(3).setIsAvailable(true);
+		  			             quests.helpEvent04();
  			    		 		 break;
-		  			    case  4: quests.helpEvent05();
+		  			    case  5: quests.events.get(4).setIsAvailable(true);
+		  			             quests.helpEvent05();
  			    		 		 break;
-		  			    case  5: quests.helpEvent06();
+		  			    case  6: quests.events.get(5).setIsAvailable(true);
+		  			             quests.helpEvent06();
  			    		 		 break;
-		  			    case  6: quests.helpEvent07();
+		  			    case  7: quests.events.get(6).setIsAvailable(true);
+		  			             quests.helpEvent07();
 		  			    		 break;
-		  			    case  7: quests.helpEvent08();
+		  			    case  8: quests.events.get(7).setIsAvailable(true);
+		  			             quests.helpEvent08();
 		  			    		 break;
-		  			    case  8: quests.helpEvent09();
+		  			    case  9: quests.events.get(8).setIsAvailable(true);
+		  			             quests.helpEvent09();
 		  			    		 break;
-		  			    case  9: quests.helpEvent10();
+		  			    case 10: quests.events.get(9).setIsAvailable(true);
+		  			    	     quests.helpEvent10();
  			    				 break;
-		  		        default: break;
+		  		        default: ta.appendText("Student Print Error.\n");
+		  		        	     break;
 		  			  }
 		  			} else if (floor.getList().get(roomNum).teacher != -1 && floor.getList().get(roomNum).puzzle == -1) {
 		  			  isQuestion = true;
 		  			  System.out.println("Question activated");
-		  			  ta.appendText(teachs.getList().get(roomNum).getTeacherName() + ": " +
-		  			          teachs.getList().get(roomNum).getDialogue() + "\n");
 		  			  questionAction();
 		  			} else {
 		  			  ta.appendText("You do not know who is in this room.\n");
@@ -333,22 +344,21 @@ public class GameGui extends Application implements Runnable
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		if (!b5.getText().equalsIgnoreCase("inventory")) {
+	  		if (b5.getText().equalsIgnoreCase("back")) {
 		  		  inventoryAction(3);
-		  		} else if (isQuestion == true) {
+		  		} else if (isQuestion) {
+		  			defaultAction();
 		  			answerAction(3);
 		  			isQuestion = false;
-		  			questionNum++;
-		  			defaultAction();
-		  		}	else if (isMap == true) {
-		  			isMap = false;
-		  			isDirection = true;
-		  			location = floor.getList().get(roomNum).getRoomName();
-		  		} else if (isDirection == true) {
+		  		} else if (isDirection) {
 		  			isDirection = false;
 		  			roomNum = 0;
-		  			observeAction();
+		  			location = b3.getText();
+			  		ta.appendText("You have travelled to " + location + ".\n=====\n");
 		  			defaultAction();
+		  		} else if (isEnd) {
+		  		    endGame();
+		  		    System.exit(0);
 		  		} else {
 		  			// open the map and travel to different parts of the campus
 		  			isDirection = true;
@@ -367,20 +377,18 @@ public class GameGui extends Application implements Runnable
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		if (!b5.getText().equalsIgnoreCase("inventory")) {
+	  		if (b5.getText().equalsIgnoreCase("back")) {
 		  		  inventoryAction(4);
-		  		} else if (isQuestion == true) {
+		  		} else if (isQuestion) {
+		  			defaultAction();
 		  			answerAction(4);
 		  			isQuestion = false;
-		  			questionNum++;
-		  			defaultAction();
-		  		} else if (isMap == true) {  
-		  			isMap = false;
-		  			isDirection = true;
-		  			location = floor.getList().get(roomNum).getRoomName();
-		  		} else if (isDirection == true) {
+		  		} else if (isDirection) {
 		  			isDirection = false;
 		  			defaultAction();
+		  		} else if (isEnd) {
+		  			endGame();
+		  			System.exit(0);
 		  		} else {
 		  		  // displays the player's current score and the likes
 		  		  statusAction();
@@ -398,15 +406,17 @@ public class GameGui extends Application implements Runnable
 	  	@Override
 	  	public void handle(ActionEvent e)
 	  	{
-	  		if(b5.getText().equalsIgnoreCase("inventory")){
-	  			b1.setText(user.getInventory().get(0).getItemName());
-	  			b2.setText(user.getInventory().get(1).getItemName());
-	  			b3.setText(user.getInventory().get(2).getItemName());
-	  			b4.setText(user.getInventory().get(3).getItemName());
-	  			b5.setText("Back");
-	  		}
-	  		else {
-	  			defaultAction();
+	  		if (!isQuestion) {
+	  			if(b5.getText().equalsIgnoreCase("inventory")){
+		  			b1.setText(user.getInventory().get(0).getItemName());
+		  			b2.setText(user.getInventory().get(1).getItemName());
+		  			b3.setText(user.getInventory().get(2).getItemName());
+		  			b4.setText(user.getInventory().get(3).getItemName());
+		  			b5.setText("Back");
+		  		}
+		  		else {
+		  			defaultAction();
+		  		}
 	  		}
 	  	}
 	  }
@@ -426,55 +436,102 @@ public class GameGui extends Application implements Runnable
 		}
 	  }
 	  
-	  if (questActive[user.getInventory().get(buttonNumber - 1).getQuestID()]) {
-		act = true;
+	  if (user.getInventory().get(buttonNumber - 1).getID() != 0) {
+		if (questActive[user.getInventory().get(buttonNumber - 1).getQuestID() - 1]) {
+		  act = true;
+		}
 	  }
 	  
 	  if (act) {
 		switch(user.getInventory().get(buttonNumber - 1).getQuestID()) {
-		  case  1: quests.endEvent01();
+		  case  1: if (floor.getList().get(roomNum).puzzle == 1) {
+			         quests.endEvent01();
+		           } else {
+		        	   ta.appendText(user.getInventory().get(buttonNumber - 1).getItemName() + "\n");
+		           }
 		           break;
-		  case  2: quests.endEvent02();
+		  case  2: if (floor.getList().get(roomNum).puzzle == 2) {
+			         quests.endEvent02();
+		           } else {
+		        	   ta.appendText(user.getInventory().get(buttonNumber - 1).getItemName() + "\n");
+		           }
 		           break;
-		  case  3: quests.endEvent03();
+		  case  3: if (floor.getList().get(roomNum).puzzle == 3) {
+			         quests.endEvent03();
+		           } else {
+		        	   ta.appendText(user.getInventory().get(buttonNumber - 1).getItemName() + "\n");
+		           }
 		           break;
-		  case  4: quests.endEvent04();
+		  case  4: if (floor.getList().get(roomNum).puzzle == 4) {
+			         quests.endEvent04();
+		           } else {
+		        	   ta.appendText(user.getInventory().get(buttonNumber - 1).getItemName() + "\n");
+		           }
 		           break;
-		  case  5: quests.endEvent05();
+		  case  5: if (floor.getList().get(roomNum).puzzle == 5) {
+			         quests.endEvent05();
+		           } else {
+		        	   ta.appendText(user.getInventory().get(buttonNumber - 1).getItemName() + "\n");
+		           }
 		           break;
-		  case  6: quests.endEvent06();
+		  case  6: if (floor.getList().get(roomNum).puzzle == 6) {
+			         quests.endEvent06();
+		           } else {
+		        	   ta.appendText(user.getInventory().get(buttonNumber - 1).getItemName() + "\n");
+		           }
 		           break;
-		  case  7: quests.endEvent07();
+		  case  7: if (floor.getList().get(roomNum).puzzle == 7) {
+			         quests.endEvent07();
+		           } else {
+		        	   ta.appendText(user.getInventory().get(buttonNumber - 1).getItemName() + "\n");
+		           }
 		           break;
-		  case  8: quests.endEvent08();
+		  case  8: if (floor.getList().get(roomNum).puzzle == 8) {
+			         quests.endEvent08();
+		           } else {
+		        	   ta.appendText(user.getInventory().get(buttonNumber - 1).getItemName() + "\n");
+		           }
 			       break;
-		  case  9: quests.endEvent09();
+		  case  9: if (floor.getList().get(roomNum).puzzle == 9) {
+			         quests.endEvent09();
+		           } else {
+		        	   ta.appendText(user.getInventory().get(buttonNumber - 1).getItemName() + "\n");
+		           }
 		           break;
-		  case 10: quests.endEvent10();
+		  case 10: if (floor.getList().get(roomNum).puzzle == 10) {
+			         quests.endEvent10();
+		           } else {
+		        	   ta.appendText(user.getInventory().get(buttonNumber - 1).getItemName() + "\n");
+		           }
 		           break;
 	      default: break;
 		}
+		floor.getList().get(roomNum).setHasCleared(true);
 	  } else {
 	    ta.appendText(user.getInventory().get(buttonNumber - 1).getItemName() + "\n");
 	  }
+	  defaultAction();
 	}
 	
 	// Method to ask a question and change the buttons to the according answers.
 	public void questionAction() {
+	  Random rand = new Random();
+	  
+	  if (roomNum == floor.getList().size() - 1) {
+		  teacherNum = 8;
+	  } else {
+	      teacherNum = rand.nextInt(8);
+	  }
+	  
+	  ta.appendText(teachs.getList().get(teacherNum).getTeacherName() + ": " +
+	          teachs.getList().get(teacherNum).getDialogue() + "\n=====\n");
+	  
+	  do {
+		questionNum = rand.nextInt(bank.getList().length);
+	  } while (bank.getList()[questionNum].getIsUsed());
+	  
 	  if (!floor.getList().get(roomNum).getHasCleared()) {
-		  String temp = bank.getList()[questionNum].getQuery();
-		  int index = 0;
-		  
-		  while (temp.length() > 0) {
-			if (temp.length() < 80) {
-			  ta.appendText(temp + "\n");
-			  temp = "";
-			} else {
-			  index = temp.lastIndexOf(" ", 80);
-			  ta.appendText(temp.substring(0, index) + "\n");
-			  temp = temp.substring(index + 1);
-			}
-		  }
+		  wrapText(bank.getList()[questionNum].getQuery());
 		  
 		  ta.appendText("A) " + bank.getList()[questionNum].getAns1() + "\nB) " +
 		          bank.getList()[questionNum].getAns2() + "\nC) " + bank.getList()[questionNum].getAns3() +
@@ -483,8 +540,10 @@ public class GameGui extends Application implements Runnable
 		  b2.setText("B");
 		  b3.setText("C");
 		  b4.setText("D");
+		  
+		  bank.getList()[questionNum].setIsUsed(true);
 	  } else {
-		  ta.appendText("You have answered course already.");
+		  ta.appendText("You have answered this course already.\n=====\n");
 	  }
 	}
 	
@@ -505,41 +564,156 @@ public class GameGui extends Application implements Runnable
 		  default: break;
 		}
 		
-		ta.appendText(bank.isCorrectString(bank.getList()[questionNum], guess, user.getBonus()) + "\n");
+		ta.appendText(bank.isCorrectString(bank.getList()[questionNum], guess, user.getBonus()) +
+				"\n=====\n");
 		
 		if (bank.isCorrect(bank.getList()[questionNum], guess, user.getBonus())) {
 		  score++;
 		  if (bank.usedHelp(bank.getList()[questionNum], guess, user.getBonus())) {
 			user.setBonus(user.getBonus() - 1);
 		  }
-		  if (!teachs.getList().get(roomNum).getRewarded() && teachs.getList().get(roomNum).getReward() > 0) {
-			ta.appendText(teachs.getList().get(roomNum).getTeacherName() +
-					": \"Here's a little something else for your good work.\n");
-			user.addItem(teachs.getList().get(roomNum).getReward());
-			teachs.getList().get(roomNum).setRewarded(true);
-			floor.getList().get(roomNum).setHasCleared(true);
+		  if (!teachs.getList().get(teacherNum).getRewarded() && teachs.getList().get(teacherNum).getReward() > 0) {
+			ta.appendText(teachs.getList().get(teacherNum).getTeacherName() +
+					": \"Here's a little something else for your good work.\"\n=====\n");
+			user.addItem(teachs.getList().get(teacherNum).getReward());
+			teachs.getList().get(teacherNum).setRewarded(true);
 		  }
 		}
+		floor.getList().get(roomNum).setHasCleared(true);
+	  }
+	  
+	  if (roomNum == floor.getList().size() - 1) {
+		ta.appendText("You have completed \"Discovering GGC!\"\n");
+		ta.appendText("Credits Earned: " + (score + user.getBonus()) + "\n");
+		
+		String result = "";
+		int rating = -1;
+		
+		if ((score + user.getBonus()) <= 3) {
+		  rating = 0; // failure
+		} else if ((score + user.getBonus()) <= 5) {
+	      rating = 1; // diploma
+		} else if ((score + user.getBonus()) <= 7) {
+		  rating = 2; // degree
+		} else if ((score + user.getBonus()) <= 9) {
+		  rating = 3; // masters
+		} else if ((score + user.getBonus()) > 9) {
+		  rating = 4; // doctorates
+		} else {
+		  rating = 5; // error?
+		}
+		
+		switch (rating) {
+		  case  0: result = "You barely passed with minimal scoring.";
+		           break;
+		  case  1: result = "You have passed and earned your Diploma. Congratulations!";
+		           break;
+		  case  2: result = "You have passed and earned your Degree. Congratulations!";
+		           break;
+		  case  3: result = "You have passed and earned your Masters. Congratulations!";
+		           break;
+		  case  4: result = "You have passed and earned your Doctorates. Congratulations!";
+		           break;
+		  default: break;
+		}
+		
+		wrapText(result);
+		endGame();
 	  }
 	}
 	
 	// Method to induct an action of the map is being used.
 	public void mapAction() {
-	  if (roomNum <= 12) {
-	  ta.appendText("You are currently at "+ location + ".\n");
-	  b1.setText(floor.getList().get(roomNum+1).getRoomName());
-	  b2.setText(floor.getList().get(roomNum+2).getRoomName());
+	  ta.appendText("You are currently at " + location + ".\n=====\n");
+	  
 	  b3.setText(floor.getList().get(0).getRoomName());
 	  b4.setText("Back");
+	  
+	  if (roomNum >= floor.getList().size() - 2) {
+		b2.setText("");
+		if (roomNum == floor.getList().size() - 1) {
+		  b1.setText("");
+		} else {
+		  b1.setText(floor.getList().get(roomNum + 1).getRoomName());
+		}
+	  } else {
+		b1.setText(floor.getList().get(roomNum + 1).getRoomName());
+		b2.setText(floor.getList().get(roomNum + 2).getRoomName());
 	  }
 	}
 	
 	// Method to induct an action when "Observe" is clicked.
 	public void observeAction() {
-	  String temp = floor.getList().get(roomNum).getRoomDescription();
-	  int index = 0;
-	  
 	  Random rand = new Random();
+	  
+	  wrapText(floor.getList().get(roomNum).getRoomDescription());
+	  
+	  if (floor.getList().get(roomNum).getHasCleared()) {
+		ta.appendText("There is nothing of interest in this room.\n=====\n");
+	  } else {
+		if (floor.getList().get(roomNum).getHasEntered()) {
+		  if (roomNum == floor.getList().size() - 1){
+			  ta.appendText("The president of GGC is in this room.\n=====\n");
+		  } else if (floor.getList().get(roomNum).puzzle == -1) {
+			ta.appendText("A teacher appears to be in this room.\n=====\n");
+		  } else {
+			ta.appendText("A student appears to be in this room.\n=====\n");
+		  }
+		} else {
+		  if (roomNum == floor.getList().size() - 1) {
+			  floor.getList().get(roomNum).teacher = 8;
+			  ta.appendText("The president of GGC is in this room.\n=====\n");
+		  } else {
+			  switch (rand.nextInt(2)) {
+			    case  0: floor.getList().get(roomNum).teacher = rand.nextInt(8);
+			             ta.appendText("A teacher appears to be in this room.\n=====\n");
+			             break;
+			    case  1: do {
+			    	       floor.getList().get(roomNum).puzzle = rand.nextInt(10) + 1;
+			             } while (quests.events.get(floor.getList().get(roomNum).puzzle - 1).getIsAvailable());
+			             ta.appendText("A student appears to be in this room.\n=====\n");
+			             break;
+			    default: break;
+		      }
+		  }
+		  
+		  floor.getList().get(roomNum).setHasEntered(true);
+		}
+	  }
+	}
+	
+	//Method that displays the player's status
+	public void statusAction() {
+	  ta.appendText("Total Credits Earned: " + score + "\n");
+	  ta.appendText("Total Number of Bonus Credits: " + user.getBonus() + "\n");
+	  ta.appendText("\nPlayer's Current Location: " + location + "\n=====\n");
+	}
+	
+	// Method to set the main buttons to their default statements.
+	public void defaultAction() {
+	  b1.setText(b1Text);
+	  b2.setText(b2Text);
+	  b3.setText(b3Text);
+	  b4.setText(b4Text);
+	  b5.setText(b5Text);
+	  b6.setText(b6Text);
+	}
+	
+	// Method to end the game
+	public void endGame() {
+	  isEnd = true;
+	  b1.setText("");
+	  b2.setText("");
+	  b3.setText("");
+	  b4.setText("");
+	  b5.setText("");
+	  b6.setText("Menu");
+	}
+	
+	// Method to wrap text in the text area.
+	public void wrapText(String text) {
+	  String temp = text;
+	  int index = -1;
 	  
 	  while (temp.length() > 0) {
 		if (temp.length() < 80) {
@@ -551,60 +725,6 @@ public class GameGui extends Application implements Runnable
 		  temp = temp.substring(index + 1);
 		}
 	  }
-	  
-	  if (floor.getList().get(roomNum).getHasCleared()) {
-		ta.appendText("There is nothing of interest in this room.\n");
-	  } else {
-		if (floor.getList().get(roomNum).getHasEntered() && !floor.getList().get(roomNum).getHasCleared()) {
-		  if (floor.getList().get(roomNum).puzzle == -1) {
-			ta.appendText("A teacher appears to be in this room.\n");
-		  } else {
-			ta.appendText("A student appears to be in this room.\n");
-		  }
-		} else if (!floor.getList().get(roomNum).getHasEntered()) {
-		  if (rand.nextInt(2) == 0 && rand.nextInt(100) > 49) {
-			while (floor.getList().get(roomNum).puzzle == -1) {
-			  int hold = rand.nextInt(10);
-			  if (!quests.events.get(hold).getIsActive() && !quests.events.get(hold).getIsCompleted() &&
-			    quests.events.get(hold).getIsAvailable()) {
-			    floor.getList().get(roomNum).puzzle = hold;
-			    quests.events.get(hold).setIsActive(true);
-			    quests.events.get(hold).setIsAvailable(false);
-			  }
-			}
-			ta.appendText("A student appears to be in this room.\n");
-		  } else if (rand.nextInt(100) > 49) {
-			while (floor.getList().get(roomNum).teacher == -1) {
-			  if (teachs.getList().get(teacherNum).room == -1) {
-				floor.getList().get(roomNum).teacher = teacherNum;
-				teachs.getList().get(teacherNum).room = roomNum;
-				teacherNum++;
-			  }
-			}
-		    ta.appendText("A teacher appears to be in this room.\n");
-		  }
-		} else {
-		  ta.appendText("There is nothing of interest in this room.\n");
-		  floor.getList().get(roomNum).setHasCleared(true);
-	    }
-	  }
-	}
-	
-	//Method that displays the player's status
-	public void statusAction() {
-	  ta.appendText("Total Credits Earned: " + score + "\n");
-	  ta.appendText("Total Number of Bonus Credits: " + user.getBonus() + "\n");
-	  ta.appendText("\nPlayer's Current Location: " + location + "\n\n");
-	}
-	
-	// Method to set the main buttons to their default statements.
-	public void defaultAction() {
-	  b1.setText(b1Text);
-	  b2.setText(b2Text);
-	  b3.setText(b3Text);
-	  b4.setText(b4Text);
-	  b5.setText(b5Text);
-	  b6.setText(b6Text);
 	}
 	
 	/* (non-Javadoc)
