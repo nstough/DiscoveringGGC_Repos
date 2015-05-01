@@ -16,7 +16,7 @@ public class TestTim{
 	
 	game.run();
 	
-	quests.addItem(1);
+	//quests.addItem(1);
 	
 	/*
 	Scanner input = new Scanner(System.in); // Scanner object to allow user-timed pauses

@@ -3,17 +3,28 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 // John was here
 
@@ -39,6 +50,8 @@ import java.util.Random;
  */
 public class GameGui extends Application implements Runnable
 {
+	private boolean isLoadedGame = false;
+	
 	//Instance of Game
 	public Game myGame = new Game();
 	
@@ -208,17 +221,20 @@ public class GameGui extends Application implements Runnable
 		primaryStage.show(); 
 		
 		//Starting placeholder text
-		ta.appendText("You walk into an empty room\n");
+		ta.appendText("Welcome to Discovering GGC!!!\n");
 	}
 
 	public static void main(String[] args)
 	{		
+ 
+		
 		//Create the Floor
 		//FloorGenerator floor = new FloorGenerator();
 		floor.layout();
 		teachs.createTeacherList();
 		//Starts the gui
 		launch(args);
+		
 	}
 	
 	
@@ -737,5 +753,253 @@ public class GameGui extends Application implements Runnable
 		
 	}
 	
-	
+	/**Class: Menu
+	 * @author Nick Stough
+	 *
+	 */
+	class Menu implements EventHandler<ActionEvent>{
+		
+		  Stage stage = new Stage();
+		  
+		  /**
+		   * Method: handle
+		   * 
+		   * creates the Gui
+		   */
+		  @Override
+		  public void handle(ActionEvent e) {
+			  
+		    GridPane pane = new GridPane();
+		    pane.setAlignment(Pos.CENTER);
+		    pane.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
+		    pane.setHgap(5.5);
+		    pane.setVgap(5.5);
+
+		    //Save Button
+		    Button btSave = new Button("Save");
+		    pane.add(btSave, 0, 0);
+		    GridPane.setHalignment(btSave, HPos.RIGHT);
+		    
+		    //Load Button
+		    Button btLoad = new Button("Load");
+		    pane.add(btLoad, 1, 0);
+		    GridPane.setHalignment(btSave, HPos.RIGHT);
+		    
+		    //Events
+		    writeFile writeF = new writeFile();
+		    CloseMenu closeF = new CloseMenu();
+		    loadFile loadF = new loadFile();
+		    
+		    //Close Button
+		    Button btClose = new Button("Cancel");
+		    pane.add(btClose, 2, 0);
+		    GridPane.setHalignment(btSave, HPos.RIGHT);
+		    
+		    //Actions
+		    btClose.setOnAction(closeF);
+		    btSave.setOnAction(writeF);
+		    btLoad.setOnAction(loadF);
+
+		    Scene scene = new Scene(pane);
+		    stage.setTitle("Menu"); 
+		    stage.setScene(scene); 
+		    stage.setResizable(false);
+		    stage.show(); 
+		  }
+		  
+		  /**Class: CloseMenu
+		   * @author Nick Stough
+		   * 
+		   */
+		  class CloseMenu implements EventHandler<ActionEvent>
+		  {
+		  	@Override
+		  	public void handle(ActionEvent e)
+		  	{
+		  	    stage.close();
+		  	}
+		  }
+		  
+		  /**Class: writeFile
+		   * @author Nick Stough
+		   *
+		   */
+		  class writeFile implements EventHandler<ActionEvent>
+		  {
+		  	@Override
+		  	public void handle(ActionEvent e)
+		  	{
+		  			System.out.println("Saving");
+		  			PrintWriter out;
+					try
+					{
+						
+						File file = new File("SaveFile.txt");
+						out = new PrintWriter(new FileWriter(file, false));
+			  			out.println(roomNum);
+			  			out.println(score);
+			  			out.println(user.getBonus());
+			  			
+						int[] inventorySave = {user.getInventory().get(0).getID(),user.getInventory().get(1).getID(),
+								user.getInventory().get(2).getID(),user.getInventory().get(3).getID()};
+						
+						Boolean[] questionsAnsw = {bank.getList()[0].getIsUsed(),
+								bank.getList()[1].getIsUsed(),
+								bank.getList()[2].getIsUsed(),
+								bank.getList()[3].getIsUsed(),
+								bank.getList()[4].getIsUsed(),
+								bank.getList()[5].getIsUsed(),
+								bank.getList()[6].getIsUsed(),
+								bank.getList()[7].getIsUsed(),
+								bank.getList()[8].getIsUsed(),
+								bank.getList()[9].getIsUsed(),
+								bank.getList()[10].getIsUsed(),
+								bank.getList()[11].getIsUsed(),
+								bank.getList()[12].getIsUsed(),
+								bank.getList()[13].getIsUsed(),
+								bank.getList()[14].getIsUsed(),
+								bank.getList()[15].getIsUsed(),
+								bank.getList()[16].getIsUsed(),
+								bank.getList()[17].getIsUsed(),
+								bank.getList()[18].getIsUsed(),
+								bank.getList()[19].getIsUsed(),
+								bank.getList()[20].getIsUsed(),
+						};
+						
+						Boolean[] roomsCleared = {
+							floor.getList().get(0).getHasCleared(),
+							floor.getList().get(1).getHasCleared(),
+							floor.getList().get(2).getHasCleared(),
+							floor.getList().get(3).getHasCleared(),
+							floor.getList().get(4).getHasCleared(),
+							floor.getList().get(5).getHasCleared(),
+							floor.getList().get(6).getHasCleared(),
+							floor.getList().get(7).getHasCleared(),
+							floor.getList().get(8).getHasCleared(),
+							floor.getList().get(9).getHasCleared(),
+							floor.getList().get(10).getHasCleared(),
+							floor.getList().get(11).getHasCleared(),
+							floor.getList().get(12).getHasCleared(),
+							floor.getList().get(13).getHasCleared(),
+							floor.getList().get(14).getHasCleared()
+						};
+						out.print(inventorySave[0]+"|");
+						out.print(inventorySave[1]+"|");
+						out.print(inventorySave[2]+"|");
+						out.println(inventorySave[3]);
+						
+						out.print(questionsAnsw[0]+"|");
+						out.print(questionsAnsw[1]+"|");
+						out.print(questionsAnsw[2]+"|");
+						out.print(questionsAnsw[3]+"|");
+						out.print(questionsAnsw[4]+"|");
+						out.print(questionsAnsw[5]+"|");
+						out.print(questionsAnsw[6]+"|");
+						out.print(questionsAnsw[7]+"|");
+						out.print(questionsAnsw[8]+"|");
+						out.print(questionsAnsw[9]+"|");
+						out.print(questionsAnsw[10]+"|");
+						out.print(questionsAnsw[11]+"|");
+						out.print(questionsAnsw[12]+"|");
+						out.print(questionsAnsw[13]+"|");
+						out.print(questionsAnsw[14]+"|");
+						out.print(questionsAnsw[15]+"|");
+						out.print(questionsAnsw[16]+"|");
+						out.print(questionsAnsw[17]+"|");
+						out.print(questionsAnsw[18]+"|");
+						out.print(questionsAnsw[19]+"|");
+						out.println(questionsAnsw[20]);
+						
+						out.print(roomsCleared[0]+"|");
+						out.print(roomsCleared[1]+"|");
+						out.print(roomsCleared[2]+"|");
+						out.print(roomsCleared[3]+"|");
+						out.print(roomsCleared[4]+"|");
+						out.print(roomsCleared[5]+"|");
+						out.print(roomsCleared[6]+"|");
+						out.print(roomsCleared[7]+"|");
+						out.print(roomsCleared[8]+"|");
+						out.print(roomsCleared[9]+"|");
+						out.print(roomsCleared[10]+"|");
+						out.print(roomsCleared[11]+"|");
+						out.print(roomsCleared[12]+"|");
+						out.print(roomsCleared[13]+"|");
+						out.print(roomsCleared[14]);
+						
+			  			out.close();
+			  			
+					} catch (IOException e1)
+					{
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		  		
+		  		stage.close();
+		  	}
+		  }
+		  
+		  /**
+		   * Class: loadFile
+		   * @author Nick
+		   *
+		   */
+		  class loadFile implements EventHandler<ActionEvent>
+		  {
+		  	@Override
+		  	public void handle(ActionEvent e)
+		  	{
+				File mediaFile = new File("SaveFile.txt");
+				
+				String room = "0";
+				String sscore = "0";
+				String bonuses = "0";
+				String[] inventory = {};
+				String[] questionsAnsw = {};
+				String[] roomsCleared = {};
+				
+				  Scanner mediaReader = null;
+				  try{
+				     mediaReader = new Scanner(mediaFile);
+				   } catch (FileNotFoundException ex){
+				     System.out.println("No Save file found");
+				   }
+				  
+				  while (mediaReader != null && mediaReader.hasNext()){
+				      room = mediaReader.nextLine();
+				      sscore = mediaReader.nextLine();
+				      bonuses = mediaReader.nextLine();
+				      inventory = mediaReader.nextLine().split("[|]");
+				      questionsAnsw = mediaReader.nextLine().split("[|]");
+				      roomsCleared = mediaReader.nextLine().split("[|]");
+
+				  }  
+		  		
+		  		System.out.println("Loading");
+		  		
+		  		
+		  		user.addItem(Integer.parseInt(inventory[0]));
+		  		user.addItem(Integer.parseInt(inventory[1]));
+		  		user.addItem(Integer.parseInt(inventory[2]));
+		  		user.addItem(Integer.parseInt(inventory[3]));
+		  		
+		  		System.out.println(user.getInventory().toString());
+		  		score = Integer.parseInt(sscore);
+		  		user.setBonus(Integer.parseInt(bonuses));
+		  		
+		  		roomNum = Integer.parseInt(room);
+		  		location = floor.getList().get(roomNum).getRoomName();
+		  		
+		  		
+		  		for(int i = 0; i < questionsAnsw.length; i++){
+		  			bank.getList()[i].setIsUsed(Boolean.parseBoolean(questionsAnsw[i]));
+		  		}
+		  		
+		  		for(int i = 0; i < roomsCleared.length; i++){
+		  			floor.getList().get(i).setHasCleared(Boolean.parseBoolean(roomsCleared[i]));
+		  		}
+		  		
+		  		stage.close();
+		  	}
+		  }
+		}
 }

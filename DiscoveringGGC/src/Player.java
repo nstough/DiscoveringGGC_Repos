@@ -100,4 +100,16 @@ public class Player {
 	}
 	GameGui.ta.appendText("=====\n");
   }
+
+/* (non-Javadoc)
+ * @see java.lang.Object#toString()
+ */
+@Override
+public String toString()
+{
+	return "Player []";
+}
+  
+  
+  
 }
